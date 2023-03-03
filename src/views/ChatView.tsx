@@ -1,4 +1,6 @@
 import { FC } from "react";
+import ChatFooter from "../components/ChatFooter";
+import ChatInput from "../components/ChatInput";
 import PrivateChatHeader from "../components/PrivateChatHeader";
 import { Status } from "../data/Status";
 
@@ -33,7 +35,9 @@ const ChatView: FC<ChatViewProps> = (props) => {
               <p className="bg-blue-500 p-5">{i + 1}</p>
             ))}
         </div>
-        <div>Footer</div>
+        <ChatFooter>
+          <ChatInput />
+        </ChatFooter>
       </main>
       <aside className="col-span-1">Info</aside>
     </div>

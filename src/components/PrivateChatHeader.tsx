@@ -1,4 +1,8 @@
-import { MoreVertical } from "lucide-react";
+import {
+  EllipsisHorizontalCircleIcon,
+  PhoneIcon,
+  VideoCameraIcon,
+} from "@heroicons/react/24/outline";
 import { FC } from "react";
 import User from "../data/User";
 import ChatHeader from "./ChatHeader";
@@ -19,12 +23,23 @@ const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
         className="h-full aspect-square rounded-full mr-4"
       />
       <div>
-        <p className="font-black text-lg">{name}</p>
-        <p className="text-neutral-400">{status}</p>
+        <p className="font-medium text-lg">{name}</p>
+        <p className="text-neutral-400">{status.toLowerCase()}</p>
       </div>
-      <button className="ml-auto">
-        <MoreVertical />
-      </button>
+
+      <div className="ml-auto flex gap-1">
+        <button className="text-neutral-400 hover:text-neutral-600 transition-colors p-3">
+          <VideoCameraIcon className="w-5 h-5" />
+        </button>
+
+        <button className="text-neutral-400 hover:text-neutral-600 transition-colors p-3">
+          <PhoneIcon className="w-5 h-5" />
+        </button>
+
+        <button className="text-neutral-400 hover:text-neutral-600 transition-colors p-3">
+          <EllipsisHorizontalCircleIcon className="w-5 h-5" />
+        </button>
+      </div>
     </ChatHeader>
   );
 };
