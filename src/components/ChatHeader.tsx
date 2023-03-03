@@ -1,11 +1,12 @@
-import { MoreVertical } from "lucide-react";
-import { FC } from "react";
-import { Status } from "../data/Status";
-import PrivateMessageHeader from "./PrivateMessageHeader";
+import { FC, ReactNode } from "react";
 
-interface ChatHeaderProps {}
+interface ChatHeaderProps {
+  children?: ReactNode;
+}
 
 const ChatHeader: FC<ChatHeaderProps> = (props) => {
+  const { children } = props;
+
   return (
     <div
       className="
@@ -15,7 +16,7 @@ const ChatHeader: FC<ChatHeaderProps> = (props) => {
         py-4 px-8
       "
     >
-      <PrivateMessageHeader Name="Peter Parker" Status={Status.Online} />
+      {children}
     </div>
   );
 };
