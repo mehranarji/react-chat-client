@@ -8,26 +8,26 @@ interface ChatViewProps {}
 
 const ChatView: FC<ChatViewProps> = (props) => {
   return (
-    <div className="grid grid-cols-4 h-full">
-      <aside className="col-span-1">Contacts goes here</aside>
+    <div className="grid grid-cols-6 h-full">
+      <aside className="col-span-2 lg:col-span-1">Contacts goes here</aside>
       <main
         className="
-        col-span-2
-        flex flex-col
-        overflow-hidden
-        border-x border-x-neutral-100
-      "
+          col-span-4
+          flex flex-col
+          overflow-hidden
+          border-x border-x-neutral-100
+        "
       >
         <PrivateChatHeader name="Peter Parker" status={Status.Online} />
         <div
           className="
-          flex-1
-          overflow-auto
-          flex flex-col-reverse flex-nowrap
-          bg-neutral-50
-          gap-2
-          p-8
-        "
+            flex-1
+            overflow-auto
+            flex flex-col-reverse flex-nowrap
+            bg-neutral-50
+            gap-2
+            p-8
+          "
         >
           {Array(35)
             .fill(null)
@@ -39,7 +39,8 @@ const ChatView: FC<ChatViewProps> = (props) => {
           <ChatInput />
         </ChatFooter>
       </main>
-      <aside className="col-span-1">Info</aside>
+
+      <aside className="col-span-1 hidden lg:block">Info</aside>
     </div>
   );
 };
