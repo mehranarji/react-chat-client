@@ -1,16 +1,22 @@
 import clsx from "clsx";
+import dayjs from "dayjs";
 import { FC } from "react";
 import { Status } from "../data/Status";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
+import DateIndicator from "./DateIndicator";
+import ImageMessageBubble from "./ImageMessageBubble";
 import PrivateChatHeader from "./PrivateChatHeader";
+import TextMessageBubble from "./TextMessageBubble";
 
 interface ChatMainProps {
-  className?: string;
+  className?: String;
 }
 
 const ChatMain: FC<ChatMainProps> = (props) => {
   const { className } = props;
+
+  const yesterday = dayjs().subtract(1, "d");
 
   return (
     <div
@@ -28,14 +34,36 @@ const ChatMain: FC<ChatMainProps> = (props) => {
           "overflow-auto",
           "flex flex-col-reverse flex-nowrap",
           "bg-neutral-50",
-          "gap-2",
+          "gap-4",
           "p-8"
         )}
       >
-        {Array(2)
+        <TextMessageBubble
+          text={
+            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam, ipsa."
+          }
+        />
+
+        <ImageMessageBubble
+          src="https://source.unsplash.com/random/200x200?nature"
+          width={200}
+          height={200}
+          isLeft
+        />
+
+        <TextMessageBubble
+          text={
+            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam, ipsa."
+          }
+          isLeft
+        />
+
+        <DateIndicator date={yesterday.toDate()} />
+
+        {Array(15)
           .fill(null)
           .map((_, i) => (
-            <p className="bg-blue-500 p-5">{i + 1}</p>
+            <TextMessageBubble isLeft={i % 4 === 0} text={`${i + 1}`} />
           ))}
       </div>
 

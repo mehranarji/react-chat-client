@@ -1,7 +1,7 @@
 import { Status } from "./Status";
 
 interface User {
-  Name: String;
+  Name: string;
   Status: Status;
 }
 
