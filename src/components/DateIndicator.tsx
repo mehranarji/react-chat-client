@@ -11,10 +11,10 @@ const DateIndicator: FC<DateIndicatorProps> = (props) => {
   return (
     <div
       className={clsx(
+        "flex items-center gap-8",
         "text-sm font-normal text-center uppercase",
-        "flex items-center gap-6",
-        "before:h-px before:bg-neutral-200 before:flex-1",
-        "after:h-px after:bg-neutral-200 after:flex-1",
+        "before:h-px before:bg-neutral-200/60 before:flex-1",
+        "after:h-px after:bg-neutral-200/60 after:flex-1",
       )}
     >
       {humanReadableDate(date)}

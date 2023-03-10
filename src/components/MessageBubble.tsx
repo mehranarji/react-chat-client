@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { FC, ReactNode } from "react";
+import ContactAvatar from "./ContactAvatar";
 
 interface MessageBubbleProps {
   children?: ReactNode;
@@ -16,10 +17,8 @@ const MessageBubble: FC<MessageBubbleProps> = (props) => {
         "flex-row": left,
       })}
     >
-      <img
-        src="https://source.unsplash.com/random/200x200?portrait"
-        alt=""
-        className="w-11 aspect-square rounded-full"
+      <ContactAvatar
+        className="w-14"
       />
       <div
         className={clsx("flex flex-col flex-1", {
@@ -54,7 +53,7 @@ const MessageBubble: FC<MessageBubbleProps> = (props) => {
           {children}
         </div>
       </div>
-      <div className="w-14"></div>
+      <div className="w-11"></div>
     </div>
   );
 };

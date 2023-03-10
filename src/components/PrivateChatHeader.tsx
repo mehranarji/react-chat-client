@@ -6,6 +6,7 @@ import {
 import { FC } from "react";
 import User from "../data/User";
 import ChatHeader from "./ChatHeader";
+import ContactAvatar from "./ContactAvatar";
 
 interface PrivateChatHeaderProps {
   name: String;
@@ -17,10 +18,9 @@ const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
 
   return (
     <ChatHeader>
-      <img
+      <ContactAvatar
+        className="h-full mr-4"
         src="https://source.unsplash.com/random/200x200?portrait"
-        alt=""
-        className="h-full aspect-square rounded-full mr-4"
       />
       <div>
         <p className="font-medium text-lg">{name}</p>
