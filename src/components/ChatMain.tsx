@@ -63,7 +63,7 @@ const ChatMain: FC<ChatMainProps> = (props) => {
         {Array(15)
           .fill(null)
           .map((_, i) => (
-            <TextMessageBubble isLeft={i % 4 === 0} text={`${i + 1}`} />
+            <TextMessageBubble key={i} isLeft={i % 4 === 0} text={`${i + 1}`} />
           ))}
       </div>
 

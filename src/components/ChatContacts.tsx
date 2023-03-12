@@ -1,11 +1,15 @@
 import {
   BoltIcon,
+  FunnelIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
 } from "@heroicons/react/20/solid";
-import {ChatBubbleOvalLeftEllipsisIcon} from "@heroicons/react/24/solid";
+import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { FC } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../app/store";
+import { fetchAll } from "../features/contacts/contactsSlice";
 import ContactListItem from "./ContactListItem";
 import SubHeader from "./SubHeader";
 import TextInputFilled from "./TextInputFilled";
@@ -16,6 +20,24 @@ interface ChatContactsProps {
 
 const ChatContacts: FC<ChatContactsProps> = (props) => {
   const { className } = props;
+  const [query, setQuery] = useState("");
+
+  const dispatch = useDispatch<AppDispatch>();
+  const contacts = useSelector((s: RootState) => s.contacts.contacts);
+
+  useEffect(() => {
+    dispatch(fetchAll());
+  }, []);
+
+  const filteredContacts = useMemo(() =>
+    contacts?.filter((c) =>
+      `${c.name.first} ${c.name.last}`
+        .toLowerCase()
+        .includes(query.trim().toLowerCase())
+    ),
+    [contacts, query]
+  );
+
   return (
     <div className={clsx("flex flex-col overflow-hidden h-full ", className)}>
       <div className="p-8 space-y-8">
@@ -28,46 +50,37 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
         <TextInputFilled
           placeholder="Search..."
           prependIcon={<MagnifyingGlassIcon className="w-5 h-5" />}
+          value={query}
+          onChange={(ev) => setQuery(ev.target.value)}
         />
       </div>
 
       <div className="overflow-auto space-y-6">
-        <div>
-          <SubHeader
-            text="Pinned"
-            className="sticky top-0 bg-white py-2 px-6"
-            icon={<BoltIcon className="w-4 h-4" />}
-          />
-          {Array(3)
-            .fill(true)
-            .map((_, i) => (
-              <button className="px-9 hover:bg-neutral-50 w-full" key={i}>
-                <ContactListItem
-                  className={clsx("py-4", {
-                    "border-t border-t-neutral-100": i !== 0,
-                  })}
-                />
-              </button>
-            ))}
-        </div>
-        <div>
-          <SubHeader
+        {filteredContacts && <div>
+
+          {query.trim() === "" && <SubHeader
             text="All message"
             className="sticky top-0 bg-white py-2 px-6"
             icon={<ChatBubbleOvalLeftEllipsisIcon className="w-4 h-4" />}
-          />
-          {Array(25)
-            .fill(true)
-            .map((_, i) => (
-              <button className="px-9 hover:bg-neutral-50 w-full" key={i}>
-                <ContactListItem
-                  className={clsx("py-4", {
-                    "border-t border-t-neutral-100": i !== 0,
-                  })}
-                />
-              </button>
-            ))}
-        </div>
+          />}
+
+          {query.trim() !== "" && <SubHeader
+            text="Filtered"
+            className="sticky top-0 bg-white py-2 px-6"
+            icon={<FunnelIcon className="w-4 h-4" />}
+          />}
+
+          {filteredContacts.map((contact, i) => (
+            <button className="px-9 hover:bg-neutral-50 w-full" key={i}>
+              <ContactListItem
+                user={contact}
+                className={clsx("py-4", {
+                  "border-t border-t-neutral-100": i !== 0,
+                })}
+              />
+            </button>
+          ))}
+        </div>}
       </div>
     </div>
   );

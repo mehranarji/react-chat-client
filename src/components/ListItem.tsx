@@ -12,7 +12,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>((props, ref) => {
 
   return (
     <div
-      className={clsx("flex items-start gap-2 overflow-hidden", className)}
+      className={clsx("flex items-center gap-4 overflow-hidden", className)}
       ref={ref}
       {...rest}
     >
