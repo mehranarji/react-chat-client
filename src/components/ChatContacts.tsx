@@ -1,17 +1,15 @@
 import {
-  BoltIcon,
-  FunnelIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
 } from "@heroicons/react/20/solid";
-import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { fetchAll } from "../features/contacts/contactsSlice";
+import useFilterContacts from "../hooks/useFilterContacts";
 import ContactListItem from "./ContactListItem";
-import SubHeader from "./SubHeader";
+import ContactsSubheader from "./ContactsSubheader";
 import TextInputFilled from "./TextInputFilled";
 
 interface ChatContactsProps {
@@ -29,14 +27,7 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
     dispatch(fetchAll());
   }, []);
 
-  const filteredContacts = useMemo(() =>
-    contacts?.filter((c) =>
-      `${c.name.first} ${c.name.last}`
-        .toLowerCase()
-        .includes(query.trim().toLowerCase())
-    ),
-    [contacts, query]
-  );
+  const filteredContacts = useFilterContacts(contacts || [], query);
 
   return (
     <div className={clsx("flex flex-col overflow-hidden h-full ", className)}>
@@ -56,22 +47,15 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
       </div>
 
       <div className="overflow-auto space-y-6">
-        {filteredContacts && <div>
+        <div>
+          <ContactsSubheader
+            contacts={filteredContacts}
+            isSearch={query.trim() !== ""}
+            className="bg-white py-2 px-6"
+          />
 
-          {query.trim() === "" && <SubHeader
-            text="All message"
-            className="sticky top-0 bg-white py-2 px-6"
-            icon={<ChatBubbleOvalLeftEllipsisIcon className="w-4 h-4" />}
-          />}
-
-          {query.trim() !== "" && <SubHeader
-            text="Filtered"
-            className="sticky top-0 bg-white py-2 px-6"
-            icon={<FunnelIcon className="w-4 h-4" />}
-          />}
-
-          {filteredContacts.map((contact, i) => (
-            <button className="px-9 hover:bg-neutral-50 w-full" key={i}>
+          {filteredContacts?.map((contact, i) => (
+            <button key={i} className="px-8 hover:bg-neutral-50 w-full">
               <ContactListItem
                 user={contact}
                 className={clsx("py-4", {
@@ -80,7 +64,11 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
               />
             </button>
           ))}
-        </div>}
+
+          {contacts && contacts.length !== 0 && (
+            <p className="text-center text-xs text-neutral-400 py-3 bg-neutral-100 uppercase">{contacts.length} Contacts</p>
+          )}
+        </div>
       </div>
     </div>
   );

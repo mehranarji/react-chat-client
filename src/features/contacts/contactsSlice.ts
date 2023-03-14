@@ -13,7 +13,7 @@ const initialState: ContactState = {
 
 export const fetchAll = createAsyncThunk("contact/fetchAll", async () => {
   const { data } = await axios.get<ApiResponse<User[]>>(
-    "https://randomuser.me/api/?results=50&nat=EN"
+    "https://randomuser.me/api/?results=50&nat=en&seed=react-chat-client"
   );
 
   return data.results;
