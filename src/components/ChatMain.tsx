@@ -22,7 +22,6 @@ const ChatMain: FC<ChatMainProps> = (props) => {
     <div
       className={clsx(
         "overflow-hidden",
-        "border-x border-x-neutral-100",
         className
       )}
     >

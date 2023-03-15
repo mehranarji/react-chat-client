@@ -5,6 +5,7 @@ import {
 import clsx from "clsx";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
 import { fetchAll } from "../features/contacts/contactsSlice";
 import useFilterContacts from "../hooks/useFilterContacts";
@@ -55,14 +56,14 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
           />
 
           {filteredContacts?.map((contact, i) => (
-            <button key={i} className="px-8 hover:bg-neutral-50 w-full">
+            <Link to={`/${i}`} key={i} className="block px-8 hover:bg-neutral-50 w-full">
               <ContactListItem
                 user={contact}
                 className={clsx("py-4", {
                   "border-t border-t-neutral-100": i !== 0,
                 })}
               />
-            </button>
+            </Link>
           ))}
 
           {contacts && contacts.length !== 0 && (

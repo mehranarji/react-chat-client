@@ -20,7 +20,7 @@ const ContactListItem: FC<ContactListItemProps> = (props) => {
           12:45 PM
         </p>
       </div>
-      <div className="flex items-baseline gap-1 hidden">
+      {/* <div className="flex items-baseline gap-1">
         <p className="truncate">
           Lorem ipsum dolor 🔥 sit amet consectetur adipisicing elit. Non,
           ratione!
@@ -28,7 +28,7 @@ const ContactListItem: FC<ContactListItemProps> = (props) => {
         <p className="ml-auto">
           <Badge className="bg-red-600 text-white text-xs">1</Badge>
         </p>
-      </div>
+      </div> */}
     </ListItem>
   );
 };

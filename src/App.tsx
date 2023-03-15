@@ -1,8 +1,11 @@
+import { BrowserRouter } from "react-router-dom";
 import ChatView from "./views/ChatView";
 
 function App() {
   return (
-    <ChatView />
+    <BrowserRouter>
+      <ChatView />
+    </BrowserRouter>
   );
 }
 
