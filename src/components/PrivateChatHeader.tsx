@@ -9,22 +9,21 @@ import ChatHeader from "./ChatHeader";
 import ContactAvatar from "./ContactAvatar";
 
 interface PrivateChatHeaderProps {
-  name: String;
-  status: User["Status"];
+  name: string;
+  avatar?: string;
+  status?: User["Status"];
 }
 
 const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
-  const { name, status } = props;
+  const { name, status, avatar } = props;
 
   return (
     <ChatHeader>
-      <ContactAvatar
-        className="h-full mr-4"
-        src="https://source.unsplash.com/random/200x200?portrait"
-      />
+      {!!avatar && <ContactAvatar className="h-full mr-4" src={avatar} />}
+
       <div>
         <p className="font-medium text-lg">{name}</p>
-        <p className="text-neutral-400">{status.toLowerCase()}</p>
+        {!!status && <p className="text-neutral-400">{status.toLowerCase()}</p>}
       </div>
 
       <div className="ml-auto flex gap-1">

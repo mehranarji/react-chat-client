@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { RootState } from "../app/store";
 import { Status } from "../data/Status";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
@@ -15,17 +18,24 @@ interface ChatMainProps {
 
 const ChatMain: FC<ChatMainProps> = (props) => {
   const { className } = props;
+  const { id } = useParams<"id">();
+  const user = useSelector((s: RootState) =>
+    s.contacts.contacts?.find((_, index) => index === Number(id))
+  );
 
+  if (!user) {
+    return <></>;
+  }
+
+  // Dummy
   const yesterday = dayjs().subtract(1, "d");
 
   return (
-    <div
-      className={clsx(
-        "overflow-hidden",
-        className
-      )}
-    >
-      <PrivateChatHeader name="Peter Parker" status={Status.Online} />
+    <div className={clsx("overflow-hidden", className)}>
+      <PrivateChatHeader
+        name={`${user.name.first} ${user.name.last}`}
+        avatar={user.picture.medium}
+      />
 
       <div
         className={clsx(

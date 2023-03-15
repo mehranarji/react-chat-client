@@ -42,7 +42,7 @@ const MessageBubble: FC<MessageBubbleProps> = (props) => {
             "overflow-hidden",
             {
               "bg-green-700 text-white": !left,
-              "bg-neutral-300 text-black": left,
+              "bg-neutral-200 text-black": left,
             },
             {
               "rounded-tr-none": !left,

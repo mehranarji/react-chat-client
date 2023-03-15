@@ -5,7 +5,7 @@ import {
 import clsx from "clsx";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
 import { fetchAll } from "../features/contacts/contactsSlice";
 import useFilterContacts from "../hooks/useFilterContacts";
@@ -19,10 +19,10 @@ interface ChatContactsProps {
 
 const ChatContacts: FC<ChatContactsProps> = (props) => {
   const { className } = props;
-  const [query, setQuery] = useState("");
-
+  
   const dispatch = useDispatch<AppDispatch>();
   const contacts = useSelector((s: RootState) => s.contacts.contacts);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     dispatch(fetchAll());
@@ -31,7 +31,7 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
   const filteredContacts = useFilterContacts(contacts || [], query);
 
   return (
-    <div className={clsx("flex flex-col overflow-hidden h-full ", className)}>
+    <div className={clsx("flex flex-col overflow-hidden h-full", className)}>
       <div className="p-8 space-y-8">
         <div className="flex items-center">
           <h2 className="font-bold text-3xl">Messages</h2>
@@ -52,22 +52,32 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
           <ContactsSubheader
             contacts={filteredContacts}
             isSearch={query.trim() !== ""}
-            className="bg-white py-2 px-6"
+            className="bg-white py-2 px-8"
           />
 
           {filteredContacts?.map((contact, i) => (
-            <Link to={`/${i}`} key={i} className="block px-8 hover:bg-neutral-50 w-full">
+            <NavLink
+              to={`/${i}`}
+              key={i}
+              className={({ isActive }) =>
+                clsx("block px-8", "hover:bg-neutral-50", "transition-colors duration-300", {
+                  "bg-neutral-50": isActive,
+                })
+              }
+            >
               <ContactListItem
                 user={contact}
                 className={clsx("py-4", {
                   "border-t border-t-neutral-100": i !== 0,
                 })}
               />
-            </Link>
+            </NavLink>
           ))}
 
           {contacts && contacts.length !== 0 && (
-            <p className="text-center text-xs text-neutral-400 py-3 bg-neutral-100 uppercase">{contacts.length} Contacts</p>
+            <p className="text-center text-xs text-neutral-400 py-3 bg-neutral-100 uppercase">
+              {contacts.length} Contacts
+            </p>
           )}
         </div>
       </div>

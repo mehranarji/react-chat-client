@@ -14,7 +14,7 @@ const TextInputFilled = forwardRef<HTMLInputElement, TextInputFilledProps>(
       <label
         className={clsx(
           "px-4",
-          "bg-neutral-100",
+          "bg-neutral-100 hover:bg-neutral-50 focus-within:bg-neutral-50",
           "rounded-xl",
           "flex items-center gap-2"
         )}
@@ -23,7 +23,7 @@ const TextInputFilled = forwardRef<HTMLInputElement, TextInputFilledProps>(
           {prependIcon}
         </span>
         <TextInput
-          className="bg-transparent outline-none py-3"
+          className="flex-1 bg-transparent outline-none py-3"
           ref={ref}
           {...rest}
         />
