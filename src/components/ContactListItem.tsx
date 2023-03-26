@@ -1,6 +1,5 @@
 import { FC } from "react";
-import User from "../data/User";
-import Badge from "./Badge";
+import User from "../app/models/User";
 import ContactAvatar from "./ContactAvatar";
 import ListItem from "./ListItem";
 
@@ -15,7 +14,7 @@ const ContactListItem: FC<ContactListItemProps> = (props) => {
   return (
     <ListItem avatar={<ContactAvatar src={user.picture.thumbnail} className="w-14" />} className={className}>
       <div className="flex items-baseline gap-1">
-        <p className="truncate">{`${user.name.first} ${user.name.last}`}</p>
+        <p className="truncate">{`${user.first_name} ${user.last_name}`}</p>
         <p className="text-xs text-neutral-400 whitespace-nowrap ml-auto">
           12:45 PM
         </p>

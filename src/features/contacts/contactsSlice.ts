@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import ApiResponse from "../../data/ApiResponse";
-import User from "../../data/User";
+import * as randomUser from "../../app/api/randomUser";
+import User from "../../app/models/User";
+import { RootState } from "../../app/store";
 
 export type ContactState = {
   contacts: User[] | null;
@@ -12,18 +12,14 @@ const initialState: ContactState = {
 };
 
 export const fetchAll = createAsyncThunk("contact/fetchAll", async () => {
-  const { data } = await axios.get<ApiResponse<User[]>>(
-    "https://randomuser.me/api/?results=50&nat=en&seed=react-chat-client"
-  );
-
-  return data.results;
+  const users = await randomUser.getList();
+  return users;
 });
 
 export const contactSlice = createSlice({
   name: "contact",
   initialState,
-  reducers: {
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder.addCase(fetchAll.fulfilled, (state, { payload }) => {
@@ -31,6 +27,10 @@ export const contactSlice = createSlice({
     });
   },
 });
+
+export const selectContacts = (state: RootState) => state.contacts;
+export const selectContact = (id: number) => (state: RootState) =>
+  state.contacts.contacts?.find((contact) => contact.id === id);
 
 // Action creators are generated for each case reducer function
 // export const {  } = contactSlice.actions;

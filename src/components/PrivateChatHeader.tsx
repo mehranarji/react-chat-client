@@ -4,14 +4,14 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
-import User from "../data/User";
+import User from "../app/models/User";
 import ChatHeader from "./ChatHeader";
 import ContactAvatar from "./ContactAvatar";
 
 interface PrivateChatHeaderProps {
   name: string;
   avatar?: string;
-  status?: User["Status"];
+  status?: User["status"];
 }
 
 const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {

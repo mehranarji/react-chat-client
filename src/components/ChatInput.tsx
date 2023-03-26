@@ -1,17 +1,32 @@
+import {
+  MicrophoneIcon,
+  PaperAirplaneIcon,
+  PaperClipIcon
+} from "@heroicons/react/20/solid";
 import { FC } from "react";
-import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
-import { MicrophoneIcon, PaperClipIcon } from "@heroicons/react/20/solid";
 
-interface ChatInputProps {}
+interface ChatInputProps {
+  text?: string;
+  onTextChange?: (text: string) => void;
+  onTextMessage?: () => void;
+}
 
 const ChatInput: FC<ChatInputProps> = (props) => {
-  const {} = props;
+  const { text, onTextChange, onTextMessage } = props;
+
   return (
-    <form>
+    <form
+      onSubmit={(ev) => {
+        ev.preventDefault();
+        onTextMessage?.();
+      }}
+    >
       <div className="flex items-center bg-neutral-100 rounded-xl">
         <input
           className="w-full h-14 bg-transparent px-6 outline-none text-lg"
           placeholder="Your messages..."
+          value={text}
+          onChange={(ev) => onTextChange?.(ev.target.value)}
         />
 
         <div className="flex h-full items-center">

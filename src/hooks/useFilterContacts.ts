@@ -1,11 +1,11 @@
 import { useMemo } from "react";
-import User from "../data/User";
+import User from "../app/models/User";
 
 const useFilterContacts = (contacts: User[], query: string) => {
   const filteredContacts = useMemo(
     () =>
       contacts?.filter((c) =>
-        `${c.name.first} ${c.name.last}`
+        `${c.first_name} ${c.last_name}`
           .toLowerCase()
           .includes(query.trim().toLowerCase())
       ) || null,

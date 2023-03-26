@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { FC } from "react";
-import { useSelector } from "react-redux";
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { RootState } from "../app/store";
-import { Status } from "../data/Status";
+import { selectChat, sendMessage } from "../features/chats/chatsSlice";
+import { selectContact } from "../features/contacts/contactsSlice";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
-import DateIndicator from "./DateIndicator";
+import EmptyChatMessages from "./EmptyChatMessages";
 import ImageMessageBubble from "./ImageMessageBubble";
 import PrivateChatHeader from "./PrivateChatHeader";
 import TextMessageBubble from "./TextMessageBubble";
@@ -18,23 +18,44 @@ interface ChatMainProps {
 
 const ChatMain: FC<ChatMainProps> = (props) => {
   const { className } = props;
-  const { id } = useParams<"id">();
-  const user = useSelector((s: RootState) =>
-    s.contacts.contacts?.find((_, index) => index === Number(id))
-  );
+  const [text, setText] = useState("");
+  const { id: chat_id } = useParams<"id">();
+  const contact = useSelector(selectContact(Number(chat_id)));
+  const chats = useSelector(selectChat(Number(chat_id)));
+  const dispatch = useDispatch();
 
-  if (!user) {
+  if (!contact) {
     return <></>;
   }
+
+  const onTextMessage = () => {
+    const content = text.trim();
+    setText("");
+
+    if (content === "") return;
+
+    dispatch(
+      sendMessage({
+        chat_id: Number(chat_id),
+        message: {
+          id: 158,
+          type: "text",
+          contact_id: 0,
+          send_at: new Date(),
+          content,
+        },
+      })
+    );
+  };
 
   // Dummy
   const yesterday = dayjs().subtract(1, "d");
 
   return (
-    <div className={clsx("overflow-hidden", className)}>
+    <div className={clsx("overflow-hidden flex flex-col", className)}>
       <PrivateChatHeader
-        name={`${user.name.first} ${user.name.last}`}
-        avatar={user.picture.medium}
+        name={`${contact.first_name} ${contact.last_name}`}
+        avatar={contact.picture.thumbnail}
       />
 
       <div
@@ -43,41 +64,48 @@ const ChatMain: FC<ChatMainProps> = (props) => {
           "overflow-auto",
           "flex flex-col-reverse flex-nowrap",
           "bg-neutral-50",
-          "gap-4",
+          "gap-2",
           "p-8"
         )}
       >
-        <TextMessageBubble
-          text={
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam, ipsa."
-          }
-        />
+        {!!chats &&
+          chats.map((chat, index) => {
+            // <TextMessageBubble key={i} isLeft={i % 4 === 0} text={`${i + 1}`} />
 
-        <ImageMessageBubble
-          src="https://source.unsplash.com/random/200x200?nature"
-          width={200}
-          height={200}
-          isLeft
-        />
+            if (chat.type === "text") {
+              return (
+                <TextMessageBubble
+                  name="fo"
+                  date={chat.send_at}
+                  text={chat.content}
+                  isLeft={chat.contact_id !== 0}
+                />
+              );
+            }
 
-        <TextMessageBubble
-          text={
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam, ipsa."
-          }
-          isLeft
-        />
+            if (chat.type === "image") {
+              return (
+                <ImageMessageBubble
+                  name="You"
+                  date={chat.send_at}
+                  src={chat.address}
+                  isLeft={chat.contact_id !== 0}
+                />
+              );
+            }
 
-        <DateIndicator date={yesterday.toDate()} />
+            return <p>unsupported message</p>;
+          })}
 
-        {Array(15)
-          .fill(null)
-          .map((_, i) => (
-            <TextMessageBubble key={i} isLeft={i % 4 === 0} text={`${i + 1}`} />
-          ))}
+        {!chats && <EmptyChatMessages />}
       </div>
 
       <ChatFooter>
-        <ChatInput />
+        <ChatInput
+          text={text}
+          onTextChange={setText}
+          onTextMessage={onTextMessage}
+        />
       </ChatFooter>
     </div>
   );

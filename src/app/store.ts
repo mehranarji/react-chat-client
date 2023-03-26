@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import contacts from "../features/contacts/contactsSlice";
+import chats from "../features/chats/chatsSlice";
 
 export const store = configureStore({
   reducer: {
-    contacts
+    contacts,
+    chats,
   },
 })
 

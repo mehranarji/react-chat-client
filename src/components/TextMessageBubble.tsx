@@ -1,15 +1,16 @@
 import { FC } from "react";
-import MessageBubble from "./MessageBubble";
+import MessageBubble, { MessageBubbleProps } from "./MessageBubble";
 
-interface TextMessageBubbleProps {
-  isLeft?: Boolean;
-  text?: String;
+interface TextMessageBubbleProps extends Omit<MessageBubbleProps, "children"> {
+  text?: string;
 }
 
 const TextMessageBubble: FC<TextMessageBubbleProps> = (props) => {
-  const { text, isLeft } = props;
+  const { text, ...rest } = props;
   return (
-    <MessageBubble isLeft={isLeft}>
+    <MessageBubble
+      {...rest}
+    >
       <p className="p-4">{text}</p>
     </MessageBubble>
   );

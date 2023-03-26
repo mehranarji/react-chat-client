@@ -3,7 +3,7 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
@@ -30,6 +30,8 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
 
   const filteredContacts = useFilterContacts(contacts || [], query);
 
+  const isSearching = useMemo(() => query.trim() !== "", [query]); 
+
   return (
     <div className={clsx("flex flex-col overflow-hidden h-full", className)}>
       <div className="p-8 space-y-8">
@@ -47,39 +49,37 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
         />
       </div>
 
-      <div className="overflow-auto space-y-6">
-        <div>
-          <ContactsSubheader
-            contacts={filteredContacts}
-            isSearch={query.trim() !== ""}
-            className="bg-white py-2 px-8"
-          />
+      <div className="h-full flex flex-col overflow-auto">
+        <ContactsSubheader
+          contacts={filteredContacts}
+          isSearch={isSearching}
+          className="bg-white py-2 px-8"
+        />
 
-          {filteredContacts?.map((contact, i) => (
-            <NavLink
-              to={`/${i}`}
-              key={i}
-              className={({ isActive }) =>
-                clsx("block px-8", "hover:bg-neutral-50", "transition-colors duration-300", {
-                  "bg-neutral-50": isActive,
-                })
-              }
-            >
-              <ContactListItem
-                user={contact}
-                className={clsx("py-4", {
-                  "border-t border-t-neutral-100": i !== 0,
-                })}
-              />
-            </NavLink>
-          ))}
+        {filteredContacts?.map((contact, i) => (
+          <NavLink
+            to={`/${i}`}
+            key={i}
+            className={({ isActive }) =>
+              clsx("block px-8", "hover:bg-neutral-50", "transition-colors duration-300", {
+                "bg-neutral-50": isActive,
+              })
+            }
+          >
+            <ContactListItem
+              user={contact}
+              className={clsx("py-4", {
+                "border-t border-t-neutral-100": i !== 0,
+              })}
+            />
+          </NavLink>
+        ))}
 
-          {contacts && contacts.length !== 0 && (
-            <p className="text-center text-xs text-neutral-400 py-3 bg-neutral-100 uppercase">
-              {contacts.length} Contacts
-            </p>
-          )}
-        </div>
+        {contacts && !isSearching && (
+          <p className="text-center text-xs text-neutral-400 py-3 bg-neutral-100 uppercase mt-auto">
+            {contacts.length} Contact(s)
+          </p>
+        )}
       </div>
     </div>
   );

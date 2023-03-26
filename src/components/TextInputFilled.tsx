@@ -16,7 +16,8 @@ const TextInputFilled = forwardRef<HTMLInputElement, TextInputFilledProps>(
           "px-4",
           "bg-neutral-100 hover:bg-neutral-50 focus-within:bg-neutral-50",
           "rounded-xl",
-          "flex items-center gap-2"
+          "flex items-center gap-2",
+          "transition-colors",
         )}
       >
         <span className="text-neutral-400">

@@ -4,7 +4,7 @@ import {
   NoSymbolIcon,
 } from "@heroicons/react/20/solid";
 import { FC } from "react";
-import User from "../data/User";
+import User from "../app/models/User";
 import SubHeader from "./SubHeader";
 
 interface ContactsSubheaderProps {
