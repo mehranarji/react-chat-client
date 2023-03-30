@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectChat, sendMessage } from "../features/chats/chatsSlice";
 import { selectContact } from "../features/contacts/contactsSlice";
 import ChatFooter from "./ChatFooter";
@@ -18,11 +18,13 @@ interface ChatMainProps {
 
 const ChatMain: FC<ChatMainProps> = (props) => {
   const { className } = props;
+
   const [text, setText] = useState("");
   const { id: chat_id } = useParams<"id">();
-  const contact = useSelector(selectContact(Number(chat_id)));
-  const chats = useSelector(selectChat(Number(chat_id)));
-  const dispatch = useDispatch();
+
+  const contact = useAppSelector(selectContact(Number(chat_id)));
+  const chats = useAppSelector(selectChat(Number(chat_id)));
+  const dispatch = useAppDispatch();
 
   if (!contact) {
     return <></>;
@@ -38,7 +40,7 @@ const ChatMain: FC<ChatMainProps> = (props) => {
       sendMessage({
         chat_id: Number(chat_id),
         message: {
-          id: 158,
+          id: Math.floor(Math.random() * 1000),
           type: "text",
           contact_id: 0,
           send_at: new Date(),
@@ -69,27 +71,29 @@ const ChatMain: FC<ChatMainProps> = (props) => {
         )}
       >
         {!!chats &&
-          chats.map((chat, index) => {
+          chats.messages?.map((message) => {
             // <TextMessageBubble key={i} isLeft={i % 4 === 0} text={`${i + 1}`} />
 
-            if (chat.type === "text") {
+            if (message.type === "text") {
               return (
                 <TextMessageBubble
-                  name="fo"
-                  date={chat.send_at}
-                  text={chat.content}
-                  isLeft={chat.contact_id !== 0}
+                  name={contact.first_name}
+                  key={message.id}
+                  date={message.send_at}
+                  text={message.content}
+                  isLeft={message.contact_id !== 0}
                 />
               );
             }
 
-            if (chat.type === "image") {
+            if (message.type === "image") {
               return (
                 <ImageMessageBubble
                   name="You"
-                  date={chat.send_at}
-                  src={chat.address}
-                  isLeft={chat.contact_id !== 0}
+                  key={message.id}
+                  date={message.send_at}
+                  src={message.address}
+                  isLeft={message.contact_id !== 0}
                 />
               );
             }

@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit'
-import contacts from "../features/contacts/contactsSlice";
+import { configureStore } from '@reduxjs/toolkit';
 import chats from "../features/chats/chatsSlice";
+import contacts from "../features/contacts/contactsSlice";
 
 export const store = configureStore({
   reducer: {

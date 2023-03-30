@@ -1,44 +1,79 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
+import Chat, { BasicChat } from "../../app/models/Chat";
 import Message from "../../app/models/Message";
 import { RootState } from "../../app/store";
 
-export type MessageState = {
-  chats: Record<number, Message[]>;
+export type ChatState = {
+  chats: {
+    [chat_id: number]: Chat;
+  };
 };
 
-const initialState: MessageState = {
+const initialState: ChatState = {
   chats: {
-    1: [
-      {
-        id: 4,
-        send_at: new Date(),
-        contact_id: 0,
-        type: "text",
-        content: "Nice new haircut",
-      },
-      {
-        id: 3,
-        send_at: dayjs().subtract(4, "h").toDate(),
-        contact_id: 0,
-        type: "image",
-        address: "https://randomuser.me/api/portraits/men/27.jpg",
-      },
-      {
-        id: 2,
-        send_at: new Date(),
-        contact_id: 0,
-        type: "text",
-        content: "Hi Dude",
-      },
-      {
-        id: 1,
-        send_at: new Date(),
-        contact_id: 1,
-        type: "text",
-        content: "Hello Mike",
-      },
-    ],
+    1: {
+      id: 1,
+      type: "private",
+      messages: [
+        {
+          id: 4,
+          send_at: new Date(),
+          contact_id: 0,
+          type: "text",
+          content: "Nice new haircut",
+        },
+        {
+          id: 3,
+          send_at: dayjs().subtract(4, "h").toDate(),
+          contact_id: 0,
+          type: "image",
+          address: "https://randomuser.me/api/portraits/men/27.jpg",
+        },
+        {
+          id: 2,
+          send_at: new Date(),
+          contact_id: 0,
+          type: "text",
+          content: "Hi Dude",
+        },
+        {
+          id: 1,
+          send_at: new Date(),
+          contact_id: 1,
+          type: "text",
+          content: "Hello Mike",
+        },
+      ],
+    },
+
+    2: {
+      id: 2,
+      type: "private",
+      messages: [
+        {
+          id: 7,
+          send_at: new Date(),
+          contact_id: 2,
+          type: "text",
+          content: "Hi Mike, I'm fine 😁",
+        },
+        {
+          id: 6,
+          send_at: new Date(),
+          contact_id: 0,
+          type: "text",
+          content: "How Are you",
+        },
+        {
+          id: 5,
+          send_at: new Date(),
+          contact_id: 0,
+          type: "text",
+          content: "Hello Saana",
+        },
+      ],
+    },
   },
 };
 
@@ -48,23 +83,58 @@ export const contactSlice = createSlice({
   reducers: {
     sendMessage: (
       state,
-      { payload }: PayloadAction<{ chat_id: number; message: Message }>
+      {
+        payload: { chat_id, message },
+      }: PayloadAction<{ chat_id: number; message: Message }>
     ) => {
-      const contact_messages = state.chats[payload.chat_id];
-      if (contact_messages) {
-        contact_messages.unshift(payload.message);
+      // Chat not found
+      if (!state.chats[chat_id]) {
+        state.chats[chat_id] = {
+          id: chat_id,
+          type: "private",
+          messages: [message],
+        };
         return;
       }
 
-      state.chats[payload.chat_id] = [payload.message];
+      state.chats[chat_id].messages?.unshift(message);
     },
   },
 });
 
+export const selectChats = ({ chats }: RootState) => chats.chats;
+
 export const selectChat =
   (id: number) =>
-  ({ chats }: RootState) =>
+  ({ chats }: RootState): BasicChat =>
     chats.chats[id];
+
+export const selectFilteredChats = ({ query }: { query: string }) =>
+  createSelector(
+    ({ chats }: RootState) => chats.chats,
+    ({ contacts }: RootState) => contacts.contacts,
+    (chats, contacts) => {
+      const result: typeof chats = {};
+
+      Object.entries(chats).forEach(([id, chat]) => {
+        if (chat.type === "private") {
+          const contact = contacts[chat.id];
+
+          if (contact && `${contact.first_name} ${contact.last_name}`.includes(query)) {
+            result[chat.id] = chat;
+          }
+
+          return;
+        }
+
+        if (chat.name.includes(query)) {
+          result[chat.id] = chat;
+        }
+      });
+
+      return result;
+    }
+  );
 
 // Action creators are generated for each case reducer function
 export const { sendMessage } = contactSlice.actions;

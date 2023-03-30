@@ -1,19 +1,19 @@
-interface TextMessage {
+type TextMessage = {
   type: "text";
   content?: string;
-}
+};
 
-interface ImageMessage {
+type ImageMessage = {
   type: "image";
   address?: string;
   caption?: string;
-}
+};
 
-interface VoiceMessage {
+type VoiceMessage = {
   type: "voice";
   address?: string;
   caption?: string;
-}
+};
 
 type Message = {
   id: number;

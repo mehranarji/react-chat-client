@@ -4,11 +4,13 @@ import User from "../../app/models/User";
 import { RootState } from "../../app/store";
 
 export type ContactState = {
-  contacts: User[] | null;
+  contacts: {
+    [id: number]: User;
+  };
 };
 
 const initialState: ContactState = {
-  contacts: null,
+  contacts: {},
 };
 
 export const fetchAll = createAsyncThunk("contact/fetchAll", async () => {
@@ -23,14 +25,17 @@ export const contactSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(fetchAll.fulfilled, (state, { payload }) => {
-      state.contacts = payload;
+      state.contacts = {};
+      payload.map((user) => (state.contacts[user.id] = user));
     });
   },
 });
 
-export const selectContacts = (state: RootState) => state.contacts;
-export const selectContact = (id: number) => (state: RootState) =>
-  state.contacts.contacts?.find((contact) => contact.id === id);
+export const selectContacts = (state: RootState) => state.contacts.contacts;
+export const selectContact =
+  (id: number) =>
+  (state: RootState): User | undefined =>
+    state.contacts.contacts[id];
 
 // Action creators are generated for each case reducer function
 // export const {  } = contactSlice.actions;

@@ -1,16 +1,15 @@
 import {
   MagnifyingGlassIcon,
-  PencilSquareIcon,
+  PencilSquareIcon
 } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import { FC, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { AppDispatch, RootState } from "../app/store";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { selectFilteredChats } from "../features/chats/chatsSlice";
 import { fetchAll } from "../features/contacts/contactsSlice";
-import useFilterContacts from "../hooks/useFilterContacts";
-import ContactListItem from "./ContactListItem";
 import ContactsSubheader from "./ContactsSubheader";
+import PrivateChatListItem from "./PrivateChatListItem";
 import TextInputFilled from "./TextInputFilled";
 
 interface ChatContactsProps {
@@ -19,18 +18,16 @@ interface ChatContactsProps {
 
 const ChatContacts: FC<ChatContactsProps> = (props) => {
   const { className } = props;
-  
-  const dispatch = useDispatch<AppDispatch>();
-  const contacts = useSelector((s: RootState) => s.contacts.contacts);
+
+  const dispatch = useAppDispatch();
   const [query, setQuery] = useState("");
+  const filteredChats = useAppSelector(selectFilteredChats({query}));
 
   useEffect(() => {
     dispatch(fetchAll());
   }, []);
 
-  const filteredContacts = useFilterContacts(contacts || [], query);
-
-  const isSearching = useMemo(() => query.trim() !== "", [query]); 
+  const isSearching = useMemo(() => query.trim() !== "", [query]);
 
   return (
     <div className={clsx("flex flex-col overflow-hidden h-full", className)}>
@@ -51,33 +48,40 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
 
       <div className="h-full flex flex-col overflow-auto">
         <ContactsSubheader
-          contacts={filteredContacts}
+          chats={Object.entries(filteredChats).map(([id, chat]) => chat) || []}
           isSearch={isSearching}
           className="bg-white py-2 px-8"
         />
 
-        {filteredContacts?.map((contact, i) => (
+        {Object.entries(filteredChats).map(([id, chat], i) => (
           <NavLink
-            to={`/${i}`}
-            key={i}
+            to={`/${chat.id}`}
+            key={chat.id}
             className={({ isActive }) =>
-              clsx("block px-8", "hover:bg-neutral-50", "transition-colors duration-300", {
-                "bg-neutral-50": isActive,
-              })
+              clsx(
+                "block px-8",
+                "hover:bg-neutral-50",
+                "transition-colors duration-300",
+                {
+                  "bg-neutral-50": isActive,
+                }
+              )
             }
           >
-            <ContactListItem
-              user={contact}
-              className={clsx("py-4", {
-                "border-t border-t-neutral-100": i !== 0,
-              })}
-            />
+            {chat.type === "private" && (
+              <PrivateChatListItem
+                chat={chat}
+                className={clsx("py-4", {
+                  "border-t border-t-neutral-100": i !== 0,
+                })}
+              />
+            )}
           </NavLink>
         ))}
 
-        {contacts && !isSearching && (
+        {filteredChats && !isSearching && (
           <p className="text-center text-xs text-neutral-400 py-3 bg-neutral-100 uppercase mt-auto">
-            {contacts.length} Contact(s)
+            {Object.entries(filteredChats).length} Chat(s)
           </p>
         )}
       </div>

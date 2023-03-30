@@ -1,22 +1,22 @@
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   FunnelIcon,
-  NoSymbolIcon,
+  NoSymbolIcon
 } from "@heroicons/react/20/solid";
 import { FC } from "react";
-import User from "../app/models/User";
+import Chat from "../app/models/Chat";
 import SubHeader from "./SubHeader";
 
 interface ContactsSubheaderProps {
   isSearch?: boolean;
-  contacts?: User[];
+  chats?: Chat[];
   className?: string;
 }
 
 const ContactsSubheader: FC<ContactsSubheaderProps> = (props) => {
-  const { contacts, isSearch,className } = props;
+  const { chats, isSearch, className } = props;
 
-  if (isSearch && (!contacts || contacts.length === 0)) {
+  if (isSearch && (!chats || chats.length === 0)) {
     return (
       <SubHeader
         text="No contact found"
