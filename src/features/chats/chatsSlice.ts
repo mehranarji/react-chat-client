@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import Chat, { BasicChat } from "../../app/models/Chat";
 import Message from "../../app/models/Message";
 import { RootState } from "../../app/store";
+import { displayName } from "../../helpers/user";
 
 export type ChatState = {
   chats: {
@@ -19,21 +20,21 @@ const initialState: ChatState = {
         {
           id: 4,
           send_at: new Date(),
-          contact_id: 0,
+          contact_id: 1248,
           type: "text",
           content: "Nice new haircut",
         },
         {
           id: 3,
           send_at: dayjs().subtract(4, "h").toDate(),
-          contact_id: 0,
+          contact_id: 1248,
           type: "image",
           address: "https://randomuser.me/api/portraits/men/27.jpg",
         },
         {
           id: 2,
           send_at: new Date(),
-          contact_id: 0,
+          contact_id: 1248,
           type: "text",
           content: "Hi Dude",
         },
@@ -61,14 +62,14 @@ const initialState: ChatState = {
         {
           id: 6,
           send_at: new Date(),
-          contact_id: 0,
+          contact_id: 1248,
           type: "text",
           content: "How Are you",
         },
         {
           id: 5,
           send_at: new Date(),
-          contact_id: 0,
+          contact_id: 1248,
           type: "text",
           content: "Hello Saana",
         },
@@ -120,14 +121,19 @@ export const selectFilteredChats = ({ query }: { query: string }) =>
         if (chat.type === "private") {
           const contact = contacts[chat.id];
 
-          if (contact && `${contact.first_name} ${contact.last_name}`.includes(query)) {
+          if (
+            contact &&
+            displayName(contact)
+              .toLowerCase()
+              .includes(query.toLowerCase())
+          ) {
             result[chat.id] = chat;
           }
 
           return;
         }
 
-        if (chat.name.includes(query)) {
+        if (chat.name.toLowerCase().includes(query.toLowerCase())) {
           result[chat.id] = chat;
         }
       });

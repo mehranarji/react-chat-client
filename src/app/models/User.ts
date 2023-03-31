@@ -6,7 +6,7 @@ interface User {
   first_name: string;
   last_name: string;
 
-  picture: {
+  picture?: {
     large: string;
     thumbnail: string;
   };

@@ -21,7 +21,7 @@ const PrivateChatListItem: FC<PrivateChatListItemProps> = (props) => {
     <ChatListItem 
       name={`${contact.first_name} ${contact.last_name}`}
       className={className}
-      avatar={contact.picture.thumbnail}
+      avatar={contact.picture?.thumbnail}
       message={chat.messages?.[0]}
     />
   );

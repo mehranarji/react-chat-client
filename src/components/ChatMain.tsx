@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectChat, sendMessage } from "../features/chats/chatsSlice";
 import { selectContact } from "../features/contacts/contactsSlice";
+import { selectUser } from "../features/users/userSlice";
+import { displayName } from "../helpers/user";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
 import EmptyChatMessages from "./EmptyChatMessages";
@@ -24,6 +26,7 @@ const ChatMain: FC<ChatMainProps> = (props) => {
 
   const contact = useAppSelector(selectContact(Number(chat_id)));
   const chats = useAppSelector(selectChat(Number(chat_id)));
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
   if (!contact) {
@@ -42,7 +45,7 @@ const ChatMain: FC<ChatMainProps> = (props) => {
         message: {
           id: Math.floor(Math.random() * 1000),
           type: "text",
-          contact_id: 0,
+          contact_id: user.id,
           send_at: new Date(),
           content,
         },
@@ -50,14 +53,11 @@ const ChatMain: FC<ChatMainProps> = (props) => {
     );
   };
 
-  // Dummy
-  const yesterday = dayjs().subtract(1, "d");
-
   return (
     <div className={clsx("overflow-hidden flex flex-col", className)}>
       <PrivateChatHeader
-        name={`${contact.first_name} ${contact.last_name}`}
-        avatar={contact.picture.thumbnail}
+        name={displayName(contact)}
+        avatar={contact.picture?.thumbnail}
       />
 
       <div
@@ -77,11 +77,11 @@ const ChatMain: FC<ChatMainProps> = (props) => {
             if (message.type === "text") {
               return (
                 <TextMessageBubble
-                  name={contact.first_name}
+                  name={message.contact_id === user.id ? "You" : contact.first_name}
                   key={message.id}
                   date={message.send_at}
                   text={message.content}
-                  isLeft={message.contact_id !== 0}
+                  isLeft={message.contact_id !== user.id}
                 />
               );
             }
@@ -89,11 +89,11 @@ const ChatMain: FC<ChatMainProps> = (props) => {
             if (message.type === "image") {
               return (
                 <ImageMessageBubble
-                  name="You"
+                  name={message.contact_id === user.id ? "You" : contact.first_name}
                   key={message.id}
                   date={message.send_at}
                   src={message.address}
-                  isLeft={message.contact_id !== 0}
+                  isLeft={message.contact_id !== user.id}
                 />
               );
             }

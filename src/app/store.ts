@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import chats from "../features/chats/chatsSlice";
 import contacts from "../features/contacts/contactsSlice";
+import user from "../features/users/userSlice";
 
 export const store = configureStore({
   reducer: {
     contacts,
     chats,
+    user,
   },
 })
 
