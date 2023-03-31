@@ -75,6 +75,30 @@ const initialState: ChatState = {
         },
       ],
     },
+
+    532: {
+      id: 532,
+      type: "group",
+      image: "https://randomuser.me/api/portraits/men/28.jpg",
+      name: "Simple Group",
+      messages: [
+        {
+          id: 9,
+          send_at: dayjs().subtract(1, "h").toDate(),
+          contact_id: 1248,
+          type:"text",
+          content:"Hello Guys"
+        },
+
+        {
+          id: 10,
+          send_at: dayjs().subtract(1, "h").toDate(),
+          contact_id: 1248,
+          type:"text",
+          content:"my name is mike, I'm a frontend developer"
+        }
+      ]
+    }
   },
 };
 

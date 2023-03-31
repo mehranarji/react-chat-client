@@ -1,6 +1,6 @@
 import {
   MagnifyingGlassIcon,
-  PencilSquareIcon
+  PencilSquareIcon,
 } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -8,7 +8,9 @@ import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectFilteredChats } from "../features/chats/chatsSlice";
 import { fetchAll } from "../features/contacts/contactsSlice";
+import ChatListItemSelector from "./ChatListItemSelector";
 import ContactsSubheader from "./ContactsSubheader";
+import GroupChatListItem from "./GroupChatListItem";
 import PrivateChatListItem from "./PrivateChatListItem";
 import TextInputFilled from "./TextInputFilled";
 
@@ -21,7 +23,7 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
 
   const dispatch = useAppDispatch();
   const [query, setQuery] = useState("");
-  const filteredChats = useAppSelector(selectFilteredChats({query}));
+  const filteredChats = useAppSelector(selectFilteredChats({ query }));
 
   useEffect(() => {
     dispatch(fetchAll());
@@ -68,14 +70,10 @@ const ChatContacts: FC<ChatContactsProps> = (props) => {
               )
             }
           >
-            {chat.type === "private" && (
-              <PrivateChatListItem
-                chat={chat}
-                className={clsx("py-4", {
-                  "border-t border-t-neutral-100": i !== 0,
-                })}
-              />
-            )}
+            <ChatListItemSelector
+              chat={chat}
+              className={clsx({ "border-t border-t-neutral-100": i !== 0 })}
+            />
           </NavLink>
         ))}
 

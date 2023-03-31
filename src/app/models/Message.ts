@@ -1,6 +1,6 @@
 type TextMessage = {
   type: "text";
-  content?: string;
+  content: string;
 };
 
 type ImageMessage = {
@@ -11,7 +11,7 @@ type ImageMessage = {
 
 type VoiceMessage = {
   type: "voice";
-  address?: string;
+  address: string;
   caption?: string;
 };
 
