@@ -5,7 +5,7 @@ type TextMessage = {
 
 type ImageMessage = {
   type: "image";
-  address?: string;
+  address: string;
   caption?: string;
 };
 

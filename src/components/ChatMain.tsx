@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import dayjs from "dayjs";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -9,10 +8,9 @@ import { selectUser } from "../features/users/userSlice";
 import { displayName } from "../helpers/user";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
+import ContactMessage from "./ContactMessage";
 import EmptyChatMessages from "./EmptyChatMessages";
-import ImageMessageBubble from "./ImageMessageBubble";
 import PrivateChatHeader from "./PrivateChatHeader";
-import TextMessageBubble from "./TextMessageBubble";
 
 interface ChatMainProps {
   className?: String;
@@ -71,35 +69,9 @@ const ChatMain: FC<ChatMainProps> = (props) => {
         )}
       >
         {!!chats &&
-          chats.messages?.map((message) => {
-            // <TextMessageBubble key={i} isLeft={i % 4 === 0} text={`${i + 1}`} />
-
-            if (message.type === "text") {
-              return (
-                <TextMessageBubble
-                  name={message.contact_id === user.id ? "You" : contact.first_name}
-                  key={message.id}
-                  date={message.send_at}
-                  text={message.content}
-                  isLeft={message.contact_id !== user.id}
-                />
-              );
-            }
-
-            if (message.type === "image") {
-              return (
-                <ImageMessageBubble
-                  name={message.contact_id === user.id ? "You" : contact.first_name}
-                  key={message.id}
-                  date={message.send_at}
-                  src={message.address}
-                  isLeft={message.contact_id !== user.id}
-                />
-              );
-            }
-
-            return <p>unsupported message</p>;
-          })}
+          chats.messages?.map((message) => (
+            <ContactMessage message={message} key={message.id} />
+          ))}
 
         {!chats && <EmptyChatMessages />}
       </div>
