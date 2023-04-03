@@ -1,10 +1,7 @@
 import { FC } from "react";
-import MessageBubble from "./MessageBubble";
+import MessageBubble, { MessageBubbleProps } from "./MessageBubble";
 
-interface ImageMessageBubbleProps {
-  name: string;
-  date: Date;
-  isLeft?: boolean;
+interface ImageMessageBubbleProps extends Omit<MessageBubbleProps, "children"> {
   src?: string;
   width?: number;
   height?: number;
@@ -13,10 +10,13 @@ interface ImageMessageBubbleProps {
 }
 
 const ImageMessageBubble: FC<ImageMessageBubbleProps> = (props) => {
-  const { date, name, src, isLeft, height, width, alt, caption } = props;
+  const { src, height, width, alt, caption, ...messageBubbleProps } = props;
   return (
-    <MessageBubble isLeft={isLeft} date={date} name={name}>
-      <img src={src} alt={alt} width={width} height={height} />
+    <MessageBubble {...messageBubbleProps}>
+      <figure>
+        <img src={src} alt={alt} width={width} height={height} />
+        {!!caption && <figcaption>{caption}</figcaption>}
+      </figure>
     </MessageBubble>
   );
 };

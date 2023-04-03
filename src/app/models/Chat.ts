@@ -8,7 +8,7 @@ export type BasicChat = {
 export type GroupChat = {
   type: "group";
   name: string;
-  image: string;
+  image?: string;
   contact_ids: number[];
   description?: string;
 } & BasicChat;

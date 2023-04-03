@@ -83,6 +83,14 @@ const initialState: ChatState = {
       name: "Simple Group",
       messages: [
         {
+          id: 10,
+          send_at: dayjs().subtract(1, "h").toDate(),
+          contact_id: 1248,
+          type: "text",
+          content: "my name is mike, I'm a frontend developer",
+        },
+        
+        {
           id: 9,
           send_at: dayjs().subtract(1, "h").toDate(),
           contact_id: 1248,
@@ -91,11 +99,11 @@ const initialState: ChatState = {
         },
 
         {
-          id: 10,
-          send_at: dayjs().subtract(1, "h").toDate(),
-          contact_id: 1248,
+          id: 11,
+          send_at: dayjs().subtract(2, "h").toDate(),
+          contact_id: 2,
           type: "text",
-          content: "my name is mike, I'm a frontend developer",
+          content: "Blah blah blah",
         },
       ],
       contact_ids: [1, 2, 1248],
@@ -142,7 +150,7 @@ export const selectChats = ({ chats }: RootState) => chats.chats;
 
 export const selectChat =
   (id: number) =>
-  ({ chats }: RootState): BasicChat =>
+  ({ chats }: RootState) =>
     chats.chats[id];
 
 export const selectFilteredChats = ({ query }: { query: string }) =>

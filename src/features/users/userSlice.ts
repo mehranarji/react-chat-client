@@ -11,6 +11,10 @@ const initialState: UserState = {
     id: 1248,
     first_name: "Mike",
     last_name: "Shinoda",
+    picture: {
+      large: "https://randomuser.me/api/portraits/men/74.jpg",
+      thumbnail: "https://randomuser.me/api/portraits/men/74.jpg",
+    }
   },
 };
 

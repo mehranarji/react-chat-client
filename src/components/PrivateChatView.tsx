@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import { FC, useCallback, useState } from "react";
-import { text } from "stream/consumers";
+import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import Chat from "../app/models/Chat";
+import { PrivateChat } from "../app/models/Chat";
 import { sendMessage } from "../features/chats/chatsSlice";
 import { selectContact } from "../features/contacts/contactsSlice";
+import { selectUser } from "../features/users/userSlice";
 import { displayName } from "../helpers/user";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
@@ -12,28 +12,25 @@ import EmptyChatMessages from "./EmptyChatMessages";
 import MessageSelector from "./MessageSelector";
 import PrivateChatHeader from "./PrivateChatHeader";
 
-interface PrivateChatProps {
-  chat: Chat;
-  className?: string;
+interface PrivateChatViewProps {
+  chat: PrivateChat;
 }
 
-const PrivateChat: FC<PrivateChatProps> = (props) => {
-  const { chat, className } = props;
+const PrivateChatView: FC<PrivateChatViewProps> = (props) => {
+  const { chat } = props;
   const [text, setText] = useState("");
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector(selectUser);
   const contact = useAppSelector(selectContact(Number(chat.id)));
 
-  if (!contact) {
-    return <></>;
-  }
-
-  const onTextMessage = useCallback(() => {
+  const onTextMessage = () => {
     const content = text.trim();
     setText("");
 
     if (content === "") return;
 
+    const chat_id = chat.id;
     dispatch(
       sendMessage({
         chat_id: Number(chat_id),
@@ -46,10 +43,14 @@ const PrivateChat: FC<PrivateChatProps> = (props) => {
         },
       })
     );
-  }, [text]);
+  };
+
+  if (!contact) {
+    return <></>;
+  }
 
   return (
-    <div className={className}>
+    <>
       <PrivateChatHeader
         name={displayName(contact)}
         avatar={contact.picture?.thumbnail}
@@ -79,8 +80,8 @@ const PrivateChat: FC<PrivateChatProps> = (props) => {
           onTextMessage={onTextMessage}
         />
       </ChatFooter>
-    </div>
+    </>
   );
 };
 
-export default PrivateChat;
+export default PrivateChatView;
