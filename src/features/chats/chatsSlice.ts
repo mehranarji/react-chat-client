@@ -100,6 +100,16 @@ const initialState: ChatState = {
       ],
       contact_ids: [1, 2, 1248],
     },
+
+    582: {
+      id: 582,
+      type: "group",
+      image: "https://randomuser.me/api/portraits/men/45.jpg",
+      name: "Friends",
+      messages: [
+      ],
+      contact_ids: [7, 9, 11, 1248],
+    },
   },
 };
 

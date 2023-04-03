@@ -42,6 +42,9 @@ export const getList = async (count?: number): Promise<User[]> => {
     id: index,
     first_name: user.name.first,
     last_name: user.name.last,
-    picture: user.picture,
+    picture: {
+      large: user.picture.large,
+      thumbnail: user.picture.medium,
+    },
   }));
 };
