@@ -7,11 +7,11 @@ import { displayName } from "../helpers/user";
 import ImageMessageBubble from "./ImageMessageBubble";
 import TextMessageBubble from "./TextMessageBubble";
 
-interface ContactMessageProps {
+interface MessageSelectorProps {
   message: Message;
 }
 
-const ContactMessage: FC<ContactMessageProps> = (props) => {
+const MessageSelector: FC<MessageSelectorProps> = (props) => {
   const { message } = props;
   const user = useAppSelector(selectUser);
   const contact = useAppSelector(selectContact(message.contact_id));
@@ -58,4 +58,4 @@ const ContactMessage: FC<ContactMessageProps> = (props) => {
   return <p>Unsupported message.</p>
 };
 
-export default ContactMessage;
+export default MessageSelector;

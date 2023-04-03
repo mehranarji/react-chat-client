@@ -8,7 +8,7 @@ import { selectUser } from "../features/users/userSlice";
 import { displayName } from "../helpers/user";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
-import ContactMessage from "./ContactMessage";
+import MessageSelector from "./MessageSelector";
 import EmptyChatMessages from "./EmptyChatMessages";
 import PrivateChatHeader from "./PrivateChatHeader";
 
@@ -70,7 +70,7 @@ const ChatMain: FC<ChatMainProps> = (props) => {
       >
         {!!chats &&
           chats.messages?.map((message) => (
-            <ContactMessage message={message} key={message.id} />
+            <MessageSelector message={message} key={message.id} />
           ))}
 
         {!chats && <EmptyChatMessages />}
