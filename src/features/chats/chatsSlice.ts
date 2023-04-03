@@ -86,19 +86,20 @@ const initialState: ChatState = {
           id: 9,
           send_at: dayjs().subtract(1, "h").toDate(),
           contact_id: 1248,
-          type:"text",
-          content:"Hello Guys"
+          type: "text",
+          content: "Hello Guys",
         },
 
         {
           id: 10,
           send_at: dayjs().subtract(1, "h").toDate(),
           contact_id: 1248,
-          type:"text",
-          content:"my name is mike, I'm a frontend developer"
-        }
-      ]
-    }
+          type: "text",
+          content: "my name is mike, I'm a frontend developer",
+        },
+      ],
+      contact_ids: [1, 2, 1248],
+    },
   },
 };
 
@@ -147,9 +148,7 @@ export const selectFilteredChats = ({ query }: { query: string }) =>
 
           if (
             contact &&
-            displayName(contact)
-              .toLowerCase()
-              .includes(query.toLowerCase())
+            displayName(contact).toLowerCase().includes(query.toLowerCase())
           ) {
             result[chat.id] = chat;
           }

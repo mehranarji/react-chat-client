@@ -20,7 +20,7 @@ const ChatListItem: FC<ChatListItemProps> = (props) => {
       className={className}
     >
       <div className="flex items-baseline gap-1">
-        <p className="truncate">{name}</p>
+        <p className="truncate font-semibold">{name}</p>
 
         {date && (
           <p className="text-xs text-neutral-400 whitespace-nowrap ml-auto">
@@ -28,15 +28,12 @@ const ChatListItem: FC<ChatListItemProps> = (props) => {
           </p>
         )}
       </div>
-      {/* <div className="flex items-baseline gap-1">
-        <p className="truncate">
-          Lorem ipsum dolor 🔥 sit amet consectetur adipisicing elit. Non,
-          ratione!
-        </p>
-        <p className="ml-auto">
+      {!!message && <div className="flex items-baseline gap-1">
+        <p className="truncate text-neutral-400">{message.type === "text" && message.content}</p>
+        {/* <p className="ml-auto">
           <Badge className="bg-red-600 text-white text-xs">1</Badge>
-        </p>
-      </div> */}
+        </p> */}
+      </div>}
     </ListItem>
   );
 };
