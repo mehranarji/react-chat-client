@@ -34,7 +34,7 @@ const GroupChatView: FC<GroupChatViewProps> = (props) => {
       sendMessage({
         chat_id: Number(chat_id),
         message: {
-          id: Math.floor(Math.random() * 1000),
+          id: Math.floor(Math.random() * 10000),
           type: "text",
           contact_id: user.id,
           send_at: new Date(),
