@@ -11,6 +11,7 @@ import ChatInput from "./ChatInput";
 import EmptyChatMessages from "./EmptyChatMessages";
 import MessageSelector from "./MessageSelector";
 import PrivateChatHeader from "./PrivateChatHeader";
+import { generateMessageId } from "../helpers/chat";
 
 interface PrivateChatViewProps {
   chat: PrivateChat;
@@ -35,7 +36,7 @@ const PrivateChatView: FC<PrivateChatViewProps> = (props) => {
       sendMessage({
         chat_id: Number(chat_id),
         message: {
-          id: Math.floor(Math.random() * 10000),
+          id: generateMessageId(chat),
           type: "text",
           contact_id: user.id,
           send_at: new Date(),
@@ -52,8 +53,7 @@ const PrivateChatView: FC<PrivateChatViewProps> = (props) => {
   return (
     <>
       <PrivateChatHeader
-        name={displayName(contact)}
-        avatar={contact.picture?.thumbnail}
+        chat={chat}
       />
 
       <div

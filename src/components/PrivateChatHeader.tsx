@@ -4,26 +4,32 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
-import User from "../app/models/User";
 import ChatHeader from "./ChatHeader";
 import ContactAvatar from "./ContactAvatar";
+import { PrivateChat } from "../app/models/Chat";
+import { useAppSelector } from "../app/hooks";
+import { selectContact } from "../features/contacts/contactsSlice";
+import { displayName } from "../helpers/user";
 
 interface PrivateChatHeaderProps {
-  name: string;
-  avatar?: string;
-  status?: User["status"];
+  chat: PrivateChat;
 }
 
 const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
-  const { name, status, avatar } = props;
+  const { chat } = props;
+  const contact = useAppSelector(selectContact(chat.id));
 
+  if (!contact) {
+    return <></>
+  }
+  
   return (
     <ChatHeader>
-      {!!avatar && <ContactAvatar className="h-full mr-4" src={avatar} />}
+      <ContactAvatar className="h-full mr-4" src={contact?.picture?.large} />
 
       <div>
-        <p className="font-medium text-lg">{name}</p>
-        {!!status && <p className="text-neutral-400">{status.toLowerCase()}</p>}
+        <p className="font-medium text-lg">{displayName(contact)}</p>
+        {!!contact.status && <p className="text-neutral-400">{contact.status.toLowerCase()}</p>}
       </div>
 
       <div className="ml-auto flex gap-1">

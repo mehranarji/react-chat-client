@@ -10,6 +10,7 @@ import ChatInput from "./ChatInput";
 import EmptyChatMessages from "./EmptyChatMessages";
 import GroupChatHeader from "./GroupChatHeader";
 import MessageSelector from "./MessageSelector";
+import { generateMessageId } from "../helpers/chat";
 
 interface GroupChatViewProps {
   chat: GroupChat;
@@ -34,7 +35,7 @@ const GroupChatView: FC<GroupChatViewProps> = (props) => {
       sendMessage({
         chat_id: Number(chat_id),
         message: {
-          id: Math.floor(Math.random() * 10000),
+          id: generateMessageId(chat),
           type: "text",
           contact_id: user.id,
           send_at: new Date(),

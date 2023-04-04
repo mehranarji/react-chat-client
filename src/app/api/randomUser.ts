@@ -1,5 +1,6 @@
 import axios from "axios";
 import User from "../models/User";
+import { Status } from "../models/Status";
 
 const client = axios.create({
   baseURL: "https://randomuser.me/api/",
@@ -42,6 +43,7 @@ export const getList = async (count?: number): Promise<User[]> => {
     id: index,
     first_name: user.name.first,
     last_name: user.name.last,
+    status: Status.Online,
     picture: {
       large: user.picture.large,
       thumbnail: user.picture.medium,
