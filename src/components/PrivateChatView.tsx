@@ -12,6 +12,8 @@ import EmptyChatMessages from "./EmptyChatMessages";
 import MessageSelector from "./MessageSelector";
 import PrivateChatHeader from "./PrivateChatHeader";
 import { generateMessageId } from "../helpers/chat";
+import UserMessage from "./UserMessage";
+import ContactMessage from "./ContactMessage";
 
 interface PrivateChatViewProps {
   chat: PrivateChat;
@@ -66,9 +68,12 @@ const PrivateChatView: FC<PrivateChatViewProps> = (props) => {
           "p-8"
         )}
       >
-        {chat.messages?.map((message) => (
-          <MessageSelector message={message} key={message.id} />
-        ))}
+        {chat.messages?.map((message) => 
+          message.contact_id === user.id ?
+            <UserMessage message={message} />
+          :
+            <ContactMessage message={message} />
+        )}
 
         {!chat.messages && <EmptyChatMessages />}
       </div>

@@ -62,7 +62,7 @@ const GroupChatView: FC<GroupChatViewProps> = (props) => {
         )}
       >
         {chat.messages?.map((message) => (
-          <MessageSelector message={message} key={message.id} useAvatar />
+          <MessageSelector message={message} key={message.id} />
         ))}
 
         {(!chat.messages || chat.messages.length === 0) && <EmptyChatMessages />}

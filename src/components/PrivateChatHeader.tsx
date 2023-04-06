@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
 import ChatHeader from "./ChatHeader";
-import ContactAvatar from "./ContactAvatar";
+import UserAvatar from "./UserAvatar";
 import { PrivateChat } from "../app/models/Chat";
 import { useAppSelector } from "../app/hooks";
 import { selectContact } from "../features/contacts/contactsSlice";
@@ -25,7 +25,7 @@ const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
   
   return (
     <ChatHeader>
-      <ContactAvatar className="h-full mr-4" src={contact?.picture?.large} />
+      <UserAvatar className="h-full mr-4" src={contact?.picture?.large} />
 
       <div>
         <p className="font-medium text-lg">{displayName(contact)}</p>

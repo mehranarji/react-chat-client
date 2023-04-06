@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { FC, ReactNode } from "react";
-import ContactAvatar from "./ContactAvatar";
+import UserAvatar from "./UserAvatar";
 
 export interface MessageBubbleProps {
   children?: ReactNode;
@@ -11,7 +11,7 @@ export interface MessageBubbleProps {
   date: Date;
 }
 
-const MessageBubble: FC<MessageBubbleProps> = (props) => {
+const MessageBubble: FC<MessageBubbleProps> = props => {
   const { date, name, children, isLeft, avatar } = props;
 
   return (
@@ -21,7 +21,8 @@ const MessageBubble: FC<MessageBubbleProps> = (props) => {
         "flex-row": isLeft,
       })}
     >
-      {!!avatar && <ContactAvatar src={avatar} className="w-14" />}
+      <UserAvatar src={avatar} className="w-14" alt={name} />
+
       <div
         className={clsx("flex flex-col flex-1", {
           "items-start": isLeft,

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import ChatHeader from "./ChatHeader";
-import ContactAvatar from "./ContactAvatar";
+import UserAvatar from "./UserAvatar";
 import { GroupChat } from "../app/models/Chat";
 import { VideoCameraIcon, PhoneIcon, EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
 
@@ -17,7 +17,7 @@ const GroupChatHeader: FC<GroupChatHeaderProps> = (props) => {
   
   return (
     <ChatHeader>
-      <ContactAvatar className="h-full mr-4" src={chat.image} alt={chat.name} />
+      <UserAvatar className="h-full mr-4" src={chat.image} alt={chat.name} />
 
       <div>
         <p className="font-medium text-lg">{chat.name}</p>

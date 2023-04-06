@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Message from "../app/models/Message";
-import ContactAvatar from "./ContactAvatar";
+import UserAvatar from "./UserAvatar";
 import ListItem from "./ListItem";
 
 interface ChatListItemProps {
@@ -16,7 +16,7 @@ const ChatListItem: FC<ChatListItemProps> = (props) => {
 
   return (
     <ListItem
-      avatar={<ContactAvatar className="w-14" src={avatar} alt={name} />}
+      avatar={<UserAvatar className="w-14" src={avatar} alt={name} />}
       className={className}
     >
       <div className="flex items-baseline gap-1">
