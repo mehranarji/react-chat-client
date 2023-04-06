@@ -11,12 +11,14 @@ import EmptyChatMessages from "./EmptyChatMessages";
 import GroupChatHeader from "./GroupChatHeader";
 import MessageSelector from "./MessageSelector";
 import { generateMessageId } from "../helpers/chat";
+import UserMessage from "./UserMessage";
+import ContactMessage from "./ContactMessage";
 
 interface GroupChatViewProps {
   chat: GroupChat;
 }
 
-const GroupChatView: FC<GroupChatViewProps> = (props) => {
+const GroupChatView: FC<GroupChatViewProps> = props => {
   const { chat } = props;
   const [text, setText] = useState("");
   const dispatch = useAppDispatch();
@@ -47,9 +49,7 @@ const GroupChatView: FC<GroupChatViewProps> = (props) => {
 
   return (
     <>
-      <GroupChatHeader
-        chat={chat}
-      />
+      <GroupChatHeader chat={chat} />
 
       <div
         className={clsx(
@@ -61,11 +61,17 @@ const GroupChatView: FC<GroupChatViewProps> = (props) => {
           "p-8"
         )}
       >
-        {chat.messages?.map((message) => (
-          <MessageSelector message={message} key={message.id} />
-        ))}
+        {chat.messages?.map(message =>
+          message.contact_id === user.id ? (
+            <UserMessage message={message} />
+          ) : (
+            <ContactMessage message={message} />
+          )
+        )}
 
-        {(!chat.messages || chat.messages.length === 0) && <EmptyChatMessages />}
+        {(!chat.messages || chat.messages.length === 0) && (
+          <EmptyChatMessages />
+        )}
       </div>
 
       <ChatFooter>
