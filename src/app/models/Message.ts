@@ -18,8 +18,8 @@ type VoiceMessage = {
 type Message = {
   id: number;
   contact_id: number;
-  send_at: Date;
-  seen_at?: Date;
+  send_at: number;
+  seen_at?: number;
 } & (TextMessage | ImageMessage | VoiceMessage);
 
 export default Message;

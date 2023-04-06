@@ -29,7 +29,7 @@ const UserMessage: FC<UserMessageProps> = props => {
       <div className={clsx("flex flex-col flex-1", "items-end")}>
         <p className={clsx("flex flex-row-reverse items-baseline gap-2 mb-2")}>
           <MessageName name="you" />
-          <MessageDate date={message.send_at} />
+          <MessageDate date={new Date(message.send_at)} />
         </p>
 
         <UserMessageBubble>

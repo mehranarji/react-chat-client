@@ -13,6 +13,8 @@ import MessageSelector from "./MessageSelector";
 import { generateMessageId } from "../helpers/chat";
 import UserMessage from "./UserMessage";
 import ContactMessage from "./ContactMessage";
+import dayjs from "dayjs";
+import MessagesList from "./MessagesList";
 
 interface GroupChatViewProps {
   chat: GroupChat;
@@ -40,7 +42,7 @@ const GroupChatView: FC<GroupChatViewProps> = props => {
           id: generateMessageId(chat),
           type: "text",
           contact_id: user.id,
-          send_at: new Date(),
+          send_at: dayjs().valueOf(),
           content,
         },
       })
@@ -51,28 +53,7 @@ const GroupChatView: FC<GroupChatViewProps> = props => {
     <>
       <GroupChatHeader chat={chat} />
 
-      <div
-        className={clsx(
-          "flex-1",
-          "overflow-auto",
-          "flex flex-col-reverse flex-nowrap",
-          "bg-neutral-50",
-          "gap-2",
-          "p-8"
-        )}
-      >
-        {chat.messages?.map(message =>
-          message.contact_id === user.id ? (
-            <UserMessage message={message} />
-          ) : (
-            <ContactMessage message={message} />
-          )
-        )}
-
-        {(!chat.messages || chat.messages.length === 0) && (
-          <EmptyChatMessages />
-        )}
-      </div>
+      <MessagesList chat={chat} />
 
       <ChatFooter>
         <ChatInput

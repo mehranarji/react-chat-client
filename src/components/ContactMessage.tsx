@@ -33,7 +33,7 @@ const ContactMessage: FC<ContactMessageProps> = props => {
       <div className={clsx("flex flex-col flex-1", "items-start")}>
         <p className={clsx("flex flex-row items-baseline gap-2 mb-2")}>
           <MessageName name={displayName(user)} />
-          <MessageDate date={message.send_at} />
+          <MessageDate date={new Date(message.send_at)} />
         </p>
 
         <ContactMessageBubble>

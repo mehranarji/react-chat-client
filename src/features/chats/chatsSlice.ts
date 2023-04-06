@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
-import Chat, { BasicChat } from "../../app/models/Chat";
+import Chat from "../../app/models/Chat";
 import Message from "../../app/models/Message";
 import { RootState } from "../../app/store";
 import { displayName } from "../../helpers/user";
@@ -19,28 +19,28 @@ const initialState: ChatState = {
       messages: [
         {
           id: 4,
-          send_at: new Date(),
+          send_at: dayjs().subtract(4, "d").valueOf(),
           contact_id: 1248,
           type: "text",
           content: "Nice new haircut",
         },
         {
           id: 3,
-          send_at: dayjs().subtract(4, "h").toDate(),
+          send_at: dayjs().subtract(4, "d").valueOf(),
           contact_id: 1248,
           type: "image",
           address: "https://randomuser.me/api/portraits/men/27.jpg",
         },
         {
           id: 2,
-          send_at: new Date(),
+          send_at: dayjs().subtract(4, "d").valueOf(),
           contact_id: 1248,
           type: "text",
           content: "Hi Dude",
         },
         {
           id: 1,
-          send_at: new Date(),
+          send_at: dayjs().subtract(4, "d").valueOf(),
           contact_id: 1,
           type: "text",
           content: "Hello Mike",
@@ -54,21 +54,21 @@ const initialState: ChatState = {
       messages: [
         {
           id: 7,
-          send_at: new Date(),
+          send_at: dayjs().subtract(4, "d").hour(4).valueOf(),
           contact_id: 2,
           type: "text",
           content: "Hi Mike, I'm fine 😁",
         },
         {
           id: 6,
-          send_at: new Date(),
+          send_at: dayjs().subtract(2, "d").valueOf(),
           contact_id: 1248,
           type: "text",
           content: "How Are you",
         },
         {
           id: 5,
-          send_at: new Date(),
+          send_at: dayjs().subtract(1, "d").valueOf(),
           contact_id: 1248,
           type: "text",
           content: "Hello Saana",
@@ -84,15 +84,15 @@ const initialState: ChatState = {
       messages: [
         {
           id: 10,
-          send_at: dayjs().subtract(1, "h").toDate(),
+          send_at: dayjs().subtract(1, "h").valueOf(),
           contact_id: 1248,
           type: "text",
           content: "my name is mike, I'm a frontend developer",
         },
-        
+
         {
           id: 9,
-          send_at: dayjs().subtract(1, "h").toDate(),
+          send_at: dayjs().subtract(1, "h").valueOf(),
           contact_id: 1248,
           type: "text",
           content: "Hello Guys",
@@ -100,7 +100,7 @@ const initialState: ChatState = {
 
         {
           id: 11,
-          send_at: dayjs().subtract(2, "h").toDate(),
+          send_at: dayjs().subtract(2, "h").valueOf(),
           contact_id: 2,
           type: "text",
           content: "Blah blah blah",
@@ -115,6 +115,21 @@ const initialState: ChatState = {
       image: "https://randomuser.me/api/portraits/men/45.jpg",
       name: "Friends",
       messages: [
+        {
+          id: 21351,
+          send_at: dayjs().subtract(2, "h").valueOf(),
+          contact_id: 7,
+          type: "text",
+          content: "Blah blah blah",
+        },
+
+        {
+          id: 21355,
+          send_at: dayjs().subtract(1, "d").valueOf(),
+          contact_id: 9,
+          type: "text",
+          content: "Blah blah blah",
+        },
       ],
       contact_ids: [7, 9, 11, 1248],
     },

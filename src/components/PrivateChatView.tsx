@@ -1,25 +1,28 @@
 import clsx from "clsx";
-import { FC, useState } from "react";
+import dayjs from "dayjs";
+import { groupBy, map } from "lodash";
+import { FC, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PrivateChat } from "../app/models/Chat";
 import { sendMessage } from "../features/chats/chatsSlice";
 import { selectContact } from "../features/contacts/contactsSlice";
 import { selectUser } from "../features/users/userSlice";
-import { displayName } from "../helpers/user";
+import { generateMessageId } from "../helpers/chat";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
-import EmptyChatMessages from "./EmptyChatMessages";
-import MessageSelector from "./MessageSelector";
-import PrivateChatHeader from "./PrivateChatHeader";
-import { generateMessageId } from "../helpers/chat";
-import UserMessage from "./UserMessage";
 import ContactMessage from "./ContactMessage";
+import EmptyChatMessages from "./EmptyChatMessages";
+import { MessageIndicator } from "./MessageIndicator";
+import PrivateChatHeader from "./PrivateChatHeader";
+import UserMessage from "./UserMessage";
+import { chatTimestamp } from "../helpers/date";
+import MessagesList from "./MessagesList";
 
 interface PrivateChatViewProps {
   chat: PrivateChat;
 }
 
-const PrivateChatView: FC<PrivateChatViewProps> = (props) => {
+const PrivateChatView: FC<PrivateChatViewProps> = props => {
   const { chat } = props;
   const [text, setText] = useState("");
   const dispatch = useAppDispatch();
@@ -41,7 +44,7 @@ const PrivateChatView: FC<PrivateChatViewProps> = (props) => {
           id: generateMessageId(chat),
           type: "text",
           contact_id: user.id,
-          send_at: new Date(),
+          send_at: dayjs().valueOf(),
           content,
         },
       })
@@ -54,29 +57,9 @@ const PrivateChatView: FC<PrivateChatViewProps> = (props) => {
 
   return (
     <>
-      <PrivateChatHeader
-        chat={chat}
-      />
+      <PrivateChatHeader chat={chat} />
 
-      <div
-        className={clsx(
-          "flex-1",
-          "overflow-auto",
-          "flex flex-col-reverse flex-nowrap",
-          "bg-neutral-50",
-          "gap-2",
-          "p-8"
-        )}
-      >
-        {chat.messages?.map((message) => 
-          message.contact_id === user.id ?
-            <UserMessage message={message} />
-          :
-            <ContactMessage message={message} />
-        )}
-
-        {!chat.messages && <EmptyChatMessages />}
-      </div>
+      <MessagesList chat={chat} />
 
       <ChatFooter>
         <ChatInput
