@@ -10,6 +10,7 @@ import { PrivateChat } from "../app/models/Chat";
 import { useAppSelector } from "../app/hooks";
 import { selectContact } from "../features/contacts/contactsSlice";
 import { displayName } from "../helpers/user";
+import ContactStatus from "./ContactStatus";
 
 interface PrivateChatHeaderProps {
   chat: PrivateChat;
@@ -29,7 +30,7 @@ const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
 
       <div>
         <p className="font-medium text-lg">{displayName(contact)}</p>
-        {!!contact.status && <p className="text-neutral-400">{contact.status.toLowerCase()}</p>}
+        <p><ContactStatus status={contact.status} /></p>
       </div>
 
       <div className="ml-auto flex gap-1">

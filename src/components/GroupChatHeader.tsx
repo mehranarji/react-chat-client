@@ -3,6 +3,7 @@ import ChatHeader from "./ChatHeader";
 import UserAvatar from "./UserAvatar";
 import { GroupChat } from "../app/models/Chat";
 import { VideoCameraIcon, PhoneIcon, EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
+import GroupStatus from "./GroupStatus";
 
 interface GroupChatHeaderProps {
   chat: GroupChat
@@ -11,17 +12,13 @@ interface GroupChatHeaderProps {
 const GroupChatHeader: FC<GroupChatHeaderProps> = (props) => {
   const { chat } = props;
 
-  const getStatus = () => {
-    return `${chat.contact_ids.length} members`;
-  }
-  
   return (
     <ChatHeader>
       <UserAvatar className="h-full mr-4" src={chat.image} alt={chat.name} />
 
       <div>
         <p className="font-medium text-lg">{chat.name}</p>
-        <p className="text-neutral-400">{getStatus()}</p>
+        <p><GroupStatus chat={chat} /></p>
       </div>
 
       <div className="ml-auto flex gap-1">

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import User from "../../app/models/User";
 import { RootState } from "../../app/store";
+import { Status } from "../../app/models/Status";
 
 export type UserState = {
   user: User
@@ -11,6 +12,7 @@ const initialState: UserState = {
     id: 1248,
     first_name: "Mike",
     last_name: "Shinoda",
+    status: Status.Online,
     picture: {
       large: "https://randomuser.me/api/portraits/men/74.jpg",
       thumbnail: "https://randomuser.me/api/portraits/men/74.jpg",

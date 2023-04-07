@@ -131,7 +131,7 @@ const initialState: ChatState = {
           content: "Blah blah blah",
         },
       ],
-      contact_ids: [7, 9, 11, 1248],
+      contact_ids: [7, 9, 5, 1248],
     },
   },
 };
@@ -148,11 +148,6 @@ export const contactSlice = createSlice({
     ) => {
       // Chat not found
       if (!state.chats[chat_id]) {
-        state.chats[chat_id] = {
-          id: chat_id,
-          type: "private",
-          messages: [message],
-        };
         return;
       }
 
@@ -197,6 +192,29 @@ export const selectFilteredChats = ({ query }: { query: string }) =>
       return result;
     }
   );
+
+export const selectGroupMembers = ({ chatId } : {chatId: number}) => 
+  createSelector(
+    ({ chats }: RootState) => chats.chats,
+    ({ contacts }: RootState) => contacts.contacts,
+    ({user}: RootState) => user.user,
+    (chats, contacts, user) => {
+      const chat = chats[chatId];
+      if (!chat || chat.type !== "group") {
+        return [];
+      }
+
+      const result = chat.contact_ids
+        .map(id => contacts[id])
+        .filter(contact => contact);
+      
+      if (chat.contact_ids.includes(user.id)) {
+        result.push(user);
+      }
+
+      return result;
+    }
+);
 
 // Action creators are generated for each case reducer function
 export const { sendMessage } = contactSlice.actions;
