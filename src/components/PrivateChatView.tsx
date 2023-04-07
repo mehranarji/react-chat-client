@@ -1,7 +1,5 @@
-import clsx from "clsx";
 import dayjs from "dayjs";
-import { groupBy, map } from "lodash";
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PrivateChat } from "../app/models/Chat";
 import { sendMessage } from "../features/chats/chatsSlice";
@@ -10,13 +8,8 @@ import { selectUser } from "../features/users/userSlice";
 import { generateMessageId } from "../helpers/chat";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
-import ContactMessage from "./ContactMessage";
-import EmptyChatMessages from "./EmptyChatMessages";
-import { MessageIndicator } from "./MessageIndicator";
-import PrivateChatHeader from "./PrivateChatHeader";
-import UserMessage from "./UserMessage";
-import { chatTimestamp } from "../helpers/date";
 import MessagesList from "./MessagesList";
+import PrivateChatHeader from "./PrivateChatHeader";
 
 interface PrivateChatViewProps {
   chat: PrivateChat;

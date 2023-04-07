@@ -1,9 +1,5 @@
-import { FC, useMemo } from "react";
-import { useAppSelector } from "../app/hooks";
+import { FC } from "react";
 import Message from "../app/models/Message";
-import { selectContact } from "../features/contacts/contactsSlice";
-import { selectUser } from "../features/users/userSlice";
-import { displayName } from "../helpers/user";
 import ImageMessage from "./ImageMessage";
 import TextMessage from "./TextMessage";
 interface MessageSelectorProps {

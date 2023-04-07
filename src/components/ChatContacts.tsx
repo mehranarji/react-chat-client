@@ -10,8 +10,6 @@ import { selectFilteredChats } from "../features/chats/chatsSlice";
 import { fetchAll } from "../features/contacts/contactsSlice";
 import ChatListItemSelector from "./ChatListItemSelector";
 import ContactsSubheader from "./ContactsSubheader";
-import GroupChatListItem from "./GroupChatListItem";
-import PrivateChatListItem from "./PrivateChatListItem";
 import TextInputFilled from "./TextInputFilled";
 
 interface ChatContactsProps {

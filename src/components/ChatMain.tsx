@@ -1,18 +1,10 @@
 import clsx from "clsx";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { selectChat, sendMessage } from "../features/chats/chatsSlice";
-import { selectContact } from "../features/contacts/contactsSlice";
-import { selectUser } from "../features/users/userSlice";
-import { displayName } from "../helpers/user";
-import ChatFooter from "./ChatFooter";
-import ChatInput from "./ChatInput";
-import MessageSelector from "./MessageSelector";
-import EmptyChatMessages from "./EmptyChatMessages";
-import PrivateChatHeader from "./PrivateChatHeader";
-import PrivateChatView from "./PrivateChatView";
+import { useAppSelector } from "../app/hooks";
+import { selectChat } from "../features/chats/chatsSlice";
 import GroupChatView from "./GroupChatView";
+import PrivateChatView from "./PrivateChatView";
 
 interface ChatMainProps {
   className?: String;

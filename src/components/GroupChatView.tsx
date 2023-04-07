@@ -1,19 +1,14 @@
-import clsx from "clsx";
+import dayjs from "dayjs";
 import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { GroupChat } from "../app/models/Chat";
 import { sendMessage } from "../features/chats/chatsSlice";
 import { selectContact } from "../features/contacts/contactsSlice";
 import { selectUser } from "../features/users/userSlice";
+import { generateMessageId } from "../helpers/chat";
 import ChatFooter from "./ChatFooter";
 import ChatInput from "./ChatInput";
-import EmptyChatMessages from "./EmptyChatMessages";
 import GroupChatHeader from "./GroupChatHeader";
-import MessageSelector from "./MessageSelector";
-import { generateMessageId } from "../helpers/chat";
-import UserMessage from "./UserMessage";
-import ContactMessage from "./ContactMessage";
-import dayjs from "dayjs";
 import MessagesList from "./MessagesList";
 
 interface GroupChatViewProps {
