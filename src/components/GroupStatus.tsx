@@ -5,6 +5,7 @@ import { selectGroupMembers } from "../features/chats/chatsSlice";
 import { Status } from "../app/models/Status";
 import AnimatingDots from "./AnimatingDots";
 import { listOfNames } from "../helpers/contact";
+import pluralize from "pluralize";
 
 interface GroupStatusProps {
   chat: GroupChat;
@@ -27,7 +28,8 @@ const GroupStatus: FC<GroupStatusProps> = props => {
   if (typingMembers.length > 0) {
     return (
       <span className="text-green-700">
-        {listOfNames(typingMembers, 0)} {typingMembers.length > 1 ? "are " : "is "}
+        {listOfNames(typingMembers, 0)}{" "}
+        {pluralize("is", typingMembers.length)}{" "}
         typing <AnimatingDots />
       </span>
     );
