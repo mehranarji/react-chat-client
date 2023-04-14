@@ -106,7 +106,7 @@ const initialState: ChatState = {
           content: "Blah blah blah",
         },
       ],
-      contact_ids: [1, 2, 1248],
+      contact_ids: [1, 2, 6, 10, 14, 15, 1248],
     },
 
     582: {

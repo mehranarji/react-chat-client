@@ -1,15 +1,16 @@
 import { FC, useMemo } from "react";
 import { Status } from "../app/models/Status";
+import AnimatingDots from "./AnimatingDots";
 
 interface ContactStatusProps {
-  status?: Status;
+  status: Status;
 }
 
 const ContactStatus: FC<ContactStatusProps> = props => {
   const { status } = props;
 
   const textColor = useMemo(() => {
-    if (status === Status.Online) {
+    if ([Status.Online, Status.Typing].includes(status)) {
       return "text-green-700";
     }
 
@@ -20,7 +21,13 @@ const ContactStatus: FC<ContactStatusProps> = props => {
     return <></>;
   }
 
-  return <span className={textColor}>{status.toLowerCase()}</span>;
+  return (
+    <>
+      <span className={textColor}>
+        {status} {status === Status.Typing && <AnimatingDots />}
+      </span>
+    </>
+  );
 };
 
 export default ContactStatus;

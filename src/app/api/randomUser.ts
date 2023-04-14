@@ -43,7 +43,7 @@ export const getList = async (count?: number): Promise<User[]> => {
     id: index,
     first_name: user.name.first,
     last_name: user.name.last,
-    status: Status.Online,
+    status: [Status.Online, Status.Offline, Status.Typing, Status.Recently][index % 4],
     picture: {
       large: user.picture.large,
       thumbnail: user.picture.medium,

@@ -30,7 +30,7 @@ const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
 
       <div>
         <p className="font-medium text-lg">{displayName(contact)}</p>
-        <p><ContactStatus status={contact.status} /></p>
+        {contact.status && <p><ContactStatus status={contact.status} /></p>}
       </div>
 
       <div className="ml-auto flex gap-1">
