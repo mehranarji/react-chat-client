@@ -9,19 +9,15 @@ interface ChatListItemSelectorProps {
   className?: string;
 }
 
-const ChatListItemSelector: FC<ChatListItemSelectorProps> = (props) => {
+const ChatListItemSelector: FC<ChatListItemSelectorProps> = props => {
   const { chat, className } = props;
 
   if (chat.type === "private") {
-    return (
-      <PrivateChatListItem chat={chat} className={clsx("py-4", className)} />
-    );
+    return <PrivateChatListItem chat={chat} className={className} />;
   }
 
   if (chat.type === "group") {
-    return (
-      <GroupChatListItem chat={chat} className={clsx("py-4", className)} />
-    );
+    return <GroupChatListItem chat={chat} className={className} />;
   }
 
   return <></>;

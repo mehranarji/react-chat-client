@@ -92,7 +92,7 @@ const initialState: ChatState = {
 
         {
           id: 9,
-          send_at: dayjs().subtract(1, "h").valueOf(),
+          send_at: dayjs().subtract(1.5, "h").valueOf(),
           contact_id: 1248,
           type: "text",
           content: "Hello Guys",
@@ -148,10 +148,15 @@ export const contactSlice = createSlice({
     ) => {
       // Chat not found
       if (!state.chats[chat_id]) {
+        state.chats[chat_id] = {
+          id: chat_id,
+          type: "private",
+          messages: [message],
+        };
         return;
       }
 
-      state.chats[chat_id].messages?.unshift(message);
+      state.chats[chat_id].messages.unshift(message);
     },
   },
 });
@@ -160,8 +165,17 @@ export const selectChats = ({ chats }: RootState) => chats.chats;
 
 export const selectChat =
   (id: number) =>
-  ({ chats }: RootState) =>
-    chats.chats[id];
+  ({ chats }: RootState): Chat | undefined => {
+    if (chats.chats[id]) {
+      return chats.chats[id];
+    }
+
+    return {
+      id,
+      type: "private",
+      messages: [],
+    };
+  };
 
 export const selectFilteredChats = ({ query }: { query: string }) =>
   createSelector(
@@ -193,11 +207,11 @@ export const selectFilteredChats = ({ query }: { query: string }) =>
     }
   );
 
-export const selectGroupMembers = ({ chatId } : {chatId: number}) => 
+export const selectGroupMembers = ({ chatId }: { chatId: number }) =>
   createSelector(
     ({ chats }: RootState) => chats.chats,
     ({ contacts }: RootState) => contacts.contacts,
-    ({user}: RootState) => user.user,
+    ({ user }: RootState) => user.user,
     (chats, contacts, user) => {
       const chat = chats[chatId];
       if (!chat || chat.type !== "group") {
@@ -207,14 +221,14 @@ export const selectGroupMembers = ({ chatId } : {chatId: number}) =>
       const result = chat.contact_ids
         .map(id => contacts[id])
         .filter(contact => contact);
-      
+
       if (chat.contact_ids.includes(user.id)) {
         result.push(user);
       }
 
       return result;
     }
-);
+  );
 
 // Action creators are generated for each case reducer function
 export const { sendMessage } = contactSlice.actions;

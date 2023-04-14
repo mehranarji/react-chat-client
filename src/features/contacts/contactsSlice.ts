@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as randomUser from "../../app/api/randomUser";
 import User from "../../app/models/User";
 import { RootState } from "../../app/store";
+import { displayName } from "../../helpers/user";
 
 export type ContactState = {
   contacts: {
@@ -23,15 +24,21 @@ export const contactSlice = createSlice({
   initialState,
   reducers: {},
 
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder.addCase(fetchAll.fulfilled, (state, { payload }) => {
       state.contacts = {};
-      payload.map((user) => (state.contacts[user.id] = user));
+      payload.map(user => (state.contacts[user.id] = user));
     });
   },
 });
 
-export const selectContacts = (state: RootState) => state.contacts.contacts;
+export const selectContacts =
+  ({ query }: { query: string }) =>
+  (state: RootState) =>
+    Object.values(state.contacts.contacts).filter(contact =>
+      displayName(contact).toLowerCase().includes(query.toLowerCase())
+    );
+
 export const selectContact =
   (id: number) =>
   (state: RootState): User | undefined =>

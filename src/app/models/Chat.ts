@@ -2,7 +2,7 @@ import Message from "./Message";
 
 export type BasicChat = {
   id: number;
-  messages?: Message[];
+  messages: Message[];
 };
 
 export type GroupChat = {

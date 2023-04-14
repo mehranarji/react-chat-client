@@ -6,22 +6,23 @@ import {
 import { FC } from "react";
 import Chat from "../app/models/Chat";
 import SubHeader from "./SubHeader";
+import pluralize from "pluralize";
 
-interface ContactsSubheaderProps {
+interface ChatListSubheaderProps {
   isSearch?: boolean;
   chats?: Chat[];
   className?: string;
 }
 
-const ContactsSubheader: FC<ContactsSubheaderProps> = (props) => {
+const ChatListSubheader: FC<ChatListSubheaderProps> = (props) => {
   const { chats, isSearch, className } = props;
 
   if (isSearch && (!chats || chats.length === 0)) {
     return (
       <SubHeader
-        text="No contact found"
+        text="No chat found"
         className={className}
-        icon={<NoSymbolIcon className="w-4 h-4" />}
+        icon={<NoSymbolIcon className="w-5 h-5" />}
       />
     );
   }
@@ -29,9 +30,9 @@ const ContactsSubheader: FC<ContactsSubheaderProps> = (props) => {
   if (isSearch)
     return (
       <SubHeader
-        text="Filtered"
+        text={`${pluralize('chats', chats?.length, true)} Found`}
         className={className}
-        icon={<FunnelIcon className="w-4 h-4" />}
+        icon={<FunnelIcon className="w-5 h-5" />}
       />
     );
 
@@ -39,9 +40,9 @@ const ContactsSubheader: FC<ContactsSubheaderProps> = (props) => {
     <SubHeader
       text="All message"
       className={className}
-      icon={<ChatBubbleOvalLeftEllipsisIcon className="w-4 h-4" />}
+      icon={<ChatBubbleOvalLeftEllipsisIcon className="w-5 h-5" />}
     />
   );
 };
 
-export default ContactsSubheader;
+export default ChatListSubheader;

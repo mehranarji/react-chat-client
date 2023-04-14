@@ -5,15 +5,20 @@ import { useAppSelector } from "../app/hooks";
 import { selectChat } from "../features/chats/chatsSlice";
 import GroupChatView from "./GroupChatView";
 import PrivateChatView from "./PrivateChatView";
+import { Navigate } from "react-router-dom";
 
-interface ChatMainProps {
+interface ChatMessagesFragmentProps {
   className?: String;
 }
 
-const ChatMain: FC<ChatMainProps> = (props) => {
+const ChatMessagesFragment: FC<ChatMessagesFragmentProps> = props => {
   const { className } = props;
   const { id: chat_id } = useParams<"id">();
   const chat = useAppSelector(selectChat(Number(chat_id)));
+
+  if (!chat) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <div className={clsx("overflow-hidden flex flex-col", className)}>
@@ -23,4 +28,4 @@ const ChatMain: FC<ChatMainProps> = (props) => {
   );
 };
 
-export default ChatMain;
+export default ChatMessagesFragment;
