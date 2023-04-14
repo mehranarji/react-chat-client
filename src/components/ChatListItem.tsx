@@ -2,6 +2,7 @@ import { FC } from "react";
 import Message from "../app/models/Message";
 import UserAvatar from "./UserAvatar";
 import ListItem from "./ListItem";
+import OnlineBadge from "./OnlineBadge";
 
 interface ChatListItemProps {
   name: string;
@@ -9,14 +10,20 @@ interface ChatListItemProps {
   avatar?: string;
   date?: Date;
   message?: Message;
+  isOnline?: boolean;
 }
 
 const ChatListItem: FC<ChatListItemProps> = (props) => {
-  const { className, avatar, date, message, name } = props;
+  const { className, avatar, date, message, name, isOnline } = props;
 
   return (
     <ListItem
-      avatar={<UserAvatar className="w-14" src={avatar} alt={name} />}
+      avatar={
+        <div className="relative">
+          <UserAvatar className="w-12" src={avatar} alt={name} />
+          {isOnline && <OnlineBadge className="absolute bottom-1 right-1" />}
+        </div>
+      }
       className={className}
     >
       <div className="flex items-baseline gap-1">

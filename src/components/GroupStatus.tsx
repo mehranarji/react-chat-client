@@ -4,7 +4,7 @@ import { useAppSelector } from "../app/hooks";
 import { selectGroupMembers } from "../features/chats/chatsSlice";
 import { Status } from "../app/models/Status";
 import AnimatingDots from "./AnimatingDots";
-import { listOfNames } from "../helpers/contact";
+import { isOnline, listOfNames } from "../helpers/contact";
 import pluralize from "pluralize";
 
 interface GroupStatusProps {
@@ -16,7 +16,7 @@ const GroupStatus: FC<GroupStatusProps> = props => {
   const members = useAppSelector(selectGroupMembers({ chatId: chat.id }));
 
   const onlineMembers = useMemo(
-    () => members?.filter(member => member.status === Status.Online) || [],
+    () => members?.filter(member => isOnline(member)) || [],
     [members]
   );
 

@@ -3,6 +3,7 @@ import { useAppSelector } from "../app/hooks";
 import { PrivateChat } from "../app/models/Chat";
 import { selectContact } from "../features/contacts/contactsSlice";
 import ChatListItem from "./ChatListItem";
+import { isOnline } from "../helpers/contact";
 
 interface PrivateChatListItemProps {
   chat: PrivateChat;
@@ -23,6 +24,7 @@ const PrivateChatListItem: FC<PrivateChatListItemProps> = (props) => {
       className={className}
       avatar={contact.picture?.thumbnail}
       message={chat.messages?.[0]}
+      isOnline={isOnline(contact)}
     />
   );
 };
