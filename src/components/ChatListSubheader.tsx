@@ -22,7 +22,7 @@ const ChatListSubheader: FC<ChatListSubheaderProps> = (props) => {
       <SubHeader
         text="No chat found"
         className={className}
-        icon={<NoSymbolIcon className="w-5 h-5" />}
+        icon={<NoSymbolIcon className="w-5" />}
       />
     );
   }
@@ -32,7 +32,7 @@ const ChatListSubheader: FC<ChatListSubheaderProps> = (props) => {
       <SubHeader
         text={`${pluralize('chats', chats?.length, true)} Found`}
         className={className}
-        icon={<FunnelIcon className="w-5 h-5" />}
+        icon={<FunnelIcon className="w-5" />}
       />
     );
 
@@ -40,7 +40,7 @@ const ChatListSubheader: FC<ChatListSubheaderProps> = (props) => {
     <SubHeader
       text="All message"
       className={className}
-      icon={<ChatBubbleOvalLeftEllipsisIcon className="w-5 h-5" />}
+      icon={<ChatBubbleOvalLeftEllipsisIcon className="w-5" />}
     />
   );
 };

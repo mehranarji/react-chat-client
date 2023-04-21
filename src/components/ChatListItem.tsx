@@ -20,8 +20,8 @@ const ChatListItem: FC<ChatListItemProps> = (props) => {
     <ListItem
       avatar={
         <div className="relative">
-          <UserAvatar className="w-12" src={avatar} alt={name} />
-          {isOnline && <OnlineBadge className="absolute bottom-1 right-1" />}
+          <UserAvatar src={avatar} alt={name} />
+          {isOnline && <OnlineBadge className="absolute bottom-0 right-0" />}
         </div>
       }
       className={className}

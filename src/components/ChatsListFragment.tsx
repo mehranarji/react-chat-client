@@ -38,7 +38,7 @@ const ChatsListFragment: FC<ChatsListFragmentProps> = props => {
   };
 
   return (
-    <div className={clsx("flex flex-col overflow-hidden h-full", className)}>
+    <nav className={clsx("flex flex-col overflow-hidden h-full", className)}>
       <div className="p-8 space-y-8">
         <div className="flex items-center">
           <h2 className="font-bold text-3xl">Messages</h2>
@@ -96,7 +96,7 @@ const ChatsListFragment: FC<ChatsListFragmentProps> = props => {
           </NavLink>
         ))}
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -26,7 +26,7 @@ const ContactMessage: FC<ContactMessageProps> = props => {
     <div className={clsx("flex items-start gap-4", "flex-row")}>
       <UserAvatar
         src={user.picture?.thumbnail}
-        className="w-14"
+        className="w-12"
         alt={displayName(user)}
       />
 

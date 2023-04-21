@@ -16,7 +16,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>((props, ref) => {
       ref={ref}
       {...rest}
     >
-      {avatar && <div className="w-14">{avatar}</div>}
+      {avatar && <div className="w-12">{avatar}</div>}
       <div className="min-w-0 flex-1">{children}</div>
     </div>
   );
