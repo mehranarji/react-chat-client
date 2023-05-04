@@ -1,15 +1,14 @@
 import { Status } from "./Status";
 
-interface User {
+type User = {
   id: number;
-
   first_name: string;
   last_name: string;
-
   picture?: {
     large: string;
     thumbnail: string;
   };
+  bio?: string;
   status?: Status;
 }
 

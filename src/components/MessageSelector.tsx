@@ -12,9 +12,9 @@ const MessageSelector: FC<MessageSelectorProps> = props => {
   if (message.type === "image") {
     return (
       <ImageMessage
-        src={message.address}
-        alt={message.caption}
-        caption={message.caption}
+        src={message.src}
+        alt={message.content}
+        caption={message.content}
       />
     );
   }

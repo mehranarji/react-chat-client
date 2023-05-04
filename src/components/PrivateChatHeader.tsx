@@ -16,21 +16,27 @@ interface PrivateChatHeaderProps {
   chat: PrivateChat;
 }
 
-const PrivateChatHeader: FC<PrivateChatHeaderProps> = (props) => {
+const PrivateChatHeader: FC<PrivateChatHeaderProps> = props => {
   const { chat } = props;
   const contact = useAppSelector(selectContact(chat.id));
 
-  if (!contact) {
-    return <></>
-  }
-  
+  if (!contact) return <></>;
+
   return (
     <ChatHeader>
-      <UserAvatar className="h-full mr-4" src={contact?.picture?.large} />
+      <UserAvatar
+        className="h-full mr-4"
+        src={contact.picture?.large}
+        alt={displayName(contact)}
+      />
 
       <div>
         <p className="font-medium text-lg">{displayName(contact)}</p>
-        {contact.status && <p><ContactStatus status={contact.status} /></p>}
+        {contact.status && (
+          <p>
+            <ContactStatus status={contact.status} />
+          </p>
+        )}
       </div>
 
       <div className="ml-auto flex gap-1">

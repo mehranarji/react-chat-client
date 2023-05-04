@@ -15,10 +15,8 @@ const ChatView: FC<ChatViewProps> = () => {
       <Routes>
         <Route
           index
-          element={
-            <EmptyChatMain className="col-span-7 xl:col-span-6" />
-            }
-          />
+          element={<EmptyChatMain className="col-span-7 xl:col-span-9" />}
+        />
 
         <Route
           path="/:id"
@@ -28,7 +26,14 @@ const ChatView: FC<ChatViewProps> = () => {
         />
       </Routes>
 
-      <ChatInfoFragment className="hidden xl:block col-span-3 border-l border-l-neutral-100" />
+      <Routes>
+        <Route
+          path="/:id"
+          element={
+            <ChatInfoFragment className="hidden xl:block col-span-3 border-l border-l-neutral-100" />
+          }
+        />
+      </Routes>
     </div>
   );
 };

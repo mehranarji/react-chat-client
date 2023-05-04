@@ -14,9 +14,7 @@ const PrivateChatListItem: FC<PrivateChatListItemProps> = (props) => {
   const { className, chat } = props;
   const contact = useAppSelector(selectContact(chat.id))
 
-  if (!contact) {
-    return <></>;
-  }
+  if (!contact) return <></>;
 
   return (
     <ChatListItem 

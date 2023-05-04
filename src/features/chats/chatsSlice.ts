@@ -13,41 +13,6 @@ export type ChatState = {
 
 const initialState: ChatState = {
   chats: {
-    1: {
-      id: 1,
-      type: "private",
-      messages: [
-        {
-          id: 4,
-          send_at: dayjs().subtract(4, "d").valueOf(),
-          contact_id: 1248,
-          type: "text",
-          content: "Nice new haircut",
-        },
-        {
-          id: 3,
-          send_at: dayjs().subtract(4, "d").valueOf(),
-          contact_id: 1248,
-          type: "image",
-          address: "https://randomuser.me/api/portraits/men/27.jpg",
-        },
-        {
-          id: 2,
-          send_at: dayjs().subtract(4, "d").valueOf(),
-          contact_id: 1248,
-          type: "text",
-          content: "Hi Dude",
-        },
-        {
-          id: 1,
-          send_at: dayjs().subtract(4, "d").valueOf(),
-          contact_id: 1,
-          type: "text",
-          content: "Hello Mike",
-        },
-      ],
-    },
-
     2: {
       id: 2,
       type: "private",
@@ -72,6 +37,42 @@ const initialState: ChatState = {
           contact_id: 1248,
           type: "text",
           content: "Hello Saana",
+        },
+      ],
+    },
+    
+    1: {
+      id: 1,
+      type: "private",
+      messages: [
+        {
+          id: 4,
+          send_at: dayjs().subtract(4, "d").valueOf(),
+          contact_id: 1248,
+          type: "text",
+          content: "Nice new haircut",
+        },
+        {
+          type: "image",
+          id: 3,
+          send_at: dayjs().subtract(4, "d").valueOf(),
+          contact_id: 1248,
+          src: "https://randomuser.me/api/portraits/men/27.jpg",
+          content: "This is my shot"
+        },
+        {
+          id: 2,
+          send_at: dayjs().subtract(4, "d").valueOf(),
+          contact_id: 1248,
+          type: "text",
+          content: "Hi Dude",
+        },
+        {
+          id: 1,
+          send_at: dayjs().subtract(4, "d").valueOf(),
+          contact_id: 1,
+          type: "text",
+          content: "Hello Mike",
         },
       ],
     },
@@ -114,6 +115,7 @@ const initialState: ChatState = {
       type: "group",
       image: "https://randomuser.me/api/portraits/men/45.jpg",
       name: "Friends",
+      description: "We are friends 👨‍👩‍👧‍👦",
       messages: [
         {
           id: 21351,
@@ -207,7 +209,7 @@ export const selectFilteredChats = ({ query }: { query: string }) =>
     }
   );
 
-export const selectGroupMembers = ({ chatId }: { chatId: number }) =>
+export const selectGroupMembers = (chatId: number) =>
   createSelector(
     ({ chats }: RootState) => chats.chats,
     ({ contacts }: RootState) => contacts.contacts,
@@ -223,7 +225,7 @@ export const selectGroupMembers = ({ chatId }: { chatId: number }) =>
         .filter(contact => contact);
 
       if (chat.contact_ids.includes(user.id)) {
-        result.push(user);
+        result.unshift(user);
       }
 
       return result;

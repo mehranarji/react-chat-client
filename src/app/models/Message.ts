@@ -1,25 +1,29 @@
-type TextMessage = {
-  type: "text";
-  content: string;
-};
+import { Image, Voice } from "./Media";
 
-type ImageMessage = {
-  type: "image";
-  address: string;
-  caption?: string;
-};
-
-type VoiceMessage = {
-  type: "voice";
-  address: string;
-  caption?: string;
-};
-
-type Message = {
+export type BasicMessage = {
   id: number;
   contact_id: number;
   send_at: number;
   seen_at?: number;
-} & (TextMessage | ImageMessage | VoiceMessage);
+};
+
+export type TextMessage = {
+  type: "text";
+  content: string;
+} & BasicMessage;
+
+export type ImageMessage = {
+  type: "image";
+  src: Image["src"];
+  content?: string;
+} & BasicMessage;
+
+export type VoiceMessage = {
+  type: "voice";
+  src: Voice["src"];
+  content?: string;
+} & BasicMessage;
+
+type Message = TextMessage | ImageMessage | VoiceMessage;
 
 export default Message;

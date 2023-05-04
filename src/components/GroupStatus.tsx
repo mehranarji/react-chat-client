@@ -13,7 +13,7 @@ interface GroupStatusProps {
 
 const GroupStatus: FC<GroupStatusProps> = props => {
   const { chat } = props;
-  const members = useAppSelector(selectGroupMembers({ chatId: chat.id }));
+  const members = useAppSelector(selectGroupMembers(chat.id));
 
   const onlineMembers = useMemo(
     () => members?.filter(member => isOnline(member)) || [],

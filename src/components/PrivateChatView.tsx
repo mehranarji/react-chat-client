@@ -3,7 +3,6 @@ import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PrivateChat } from "../app/models/Chat";
 import { sendMessage } from "../features/chats/chatsSlice";
-import { selectContact } from "../features/contacts/contactsSlice";
 import { selectUser } from "../features/users/userSlice";
 import { generateMessageId } from "../helpers/chat";
 import ChatFooter from "./ChatFooter";
@@ -21,7 +20,6 @@ const PrivateChatView: FC<PrivateChatViewProps> = props => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector(selectUser);
-  const contact = useAppSelector(selectContact(Number(chat.id)));
 
   const onTextMessage = () => {
     const content = text.trim();
@@ -43,10 +41,6 @@ const PrivateChatView: FC<PrivateChatViewProps> = props => {
       })
     );
   };
-
-  if (!contact) {
-    return <></>;
-  }
 
   return (
     <>
