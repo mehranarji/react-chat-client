@@ -52,7 +52,7 @@ const GroupChatInfo: FC<GroupChatInfoProps> = props => {
             className="mb-2"
             text={`Media (${chatMediaList.length})`}
             icon={<PhotoIcon className="w-5" />}
-          />
+          ></SubHeader>
           <MediaGallery mediaList={chatMediaList} />
         </>
       )}

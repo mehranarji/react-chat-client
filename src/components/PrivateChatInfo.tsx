@@ -37,14 +37,7 @@ const PrivateChatInfo: FC<PrivateChatInfoProps> = props => {
             className="mb-2"
             text={`Media (${chatMediaList.length})`}
             icon={<PhotoIcon className="w-5" />}
-          >
-            <a
-              href="/"
-              className="text-green-700 underline-offset-4 underline ml-auto"
-            >
-              Show All
-            </a>
-          </SubHeader>
+          ></SubHeader>
           <MediaGallery mediaList={chatMediaList} />
         </>
       )}
