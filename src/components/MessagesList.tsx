@@ -42,7 +42,7 @@ const MessagesList: FC<MessagesListProps> = props => {
       {Object.keys(groupedMessages)
         .sort((a, b) => Number(b) - Number(a))
         .map(date => (
-          <div key={date}>
+          <div key={date} className="flex flex-col gap-y-4">
             <MessageIndicator>{chatTimestamp(Number(date))}</MessageIndicator>
 
             {groupedMessages[date]
