@@ -22,7 +22,7 @@ const initialState: ChatState = {
           send_at: dayjs().subtract(4, "d").hour(4).valueOf(),
           contact_id: 2,
           type: "text",
-          content: "Hi Mike, I'm fine 😁",
+          content: "Hi Mike, \nI'm fine 😁",
         },
         {
           id: 6,
