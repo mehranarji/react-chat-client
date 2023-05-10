@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.30650b9e.css",
-    "main.js": "/static/js/main.b50abf86.js",
-    "static/js/787.cb326dda.chunk.js": "/static/js/787.cb326dda.chunk.js",
-    "index.html": "/index.html",
-    "main.30650b9e.css.map": "/static/css/main.30650b9e.css.map",
-    "main.b50abf86.js.map": "/static/js/main.b50abf86.js.map",
-    "787.cb326dda.chunk.js.map": "/static/js/787.cb326dda.chunk.js.map"
+    "main.css": "/react-chat-client/static/css/main.30650b9e.css",
+    "main.js": "/react-chat-client/static/js/main.a9f8bacb.js",
+    "static/js/787.cb326dda.chunk.js": "/react-chat-client/static/js/787.cb326dda.chunk.js",
+    "index.html": "/react-chat-client/index.html",
+    "main.30650b9e.css.map": "/react-chat-client/static/css/main.30650b9e.css.map",
+    "main.a9f8bacb.js.map": "/react-chat-client/static/js/main.a9f8bacb.js.map",
+    "787.cb326dda.chunk.js.map": "/react-chat-client/static/js/787.cb326dda.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.30650b9e.css",
-    "static/js/main.b50abf86.js"
+    "static/js/main.a9f8bacb.js"
   ]
 }
