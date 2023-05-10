@@ -1,11 +1,11 @@
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import ChatView from "./views/ChatView";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ChatView />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -1,6 +1,7 @@
 {
   "name": "react-chat-client",
   "version": "0.1.0",
+  "homepage": "https://mehranarji.github.io/react-chat-client",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.7.13",
