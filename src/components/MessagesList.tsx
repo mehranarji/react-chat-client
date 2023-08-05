@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { groupBy } from "lodash";
+import { chain, groupBy, reduce } from "lodash";
 import { FC, useMemo } from "react";
 import { useAppSelector } from "../app/hooks";
 import Chat from "../app/models/Chat";
@@ -10,6 +10,7 @@ import ContactMessage from "./ContactMessage";
 import EmptyChatMessages from "./EmptyChatMessages";
 import { MessageIndicator } from "./MessageIndicator";
 import UserMessage from "./UserMessage";
+import Message from "src/app/models/Message";
 
 interface MessagesListProps {
   chat: Chat;
@@ -22,9 +23,28 @@ const MessagesList: FC<MessagesListProps> = props => {
 
   const groupedMessages = useMemo(
     () =>
-      groupBy(chat.messages, message =>
-        dayjs(message.send_at).startOf("d").valueOf()
-      ),
+      chain(chat.messages)
+        .sortBy((message) => message.send_at)
+        .groupBy(message =>
+          dayjs(message.send_at).startOf("d").valueOf()
+        )
+        .mapValues((messageGroup) =>
+          reduce<Message, Message[][]>(messageGroup, (result, message, index, messageGroup) => {
+            if (index === 0) {
+              return [[message]];
+            }
+
+            if (message.contact_id === messageGroup[index - 1].contact_id && dayjs(message.send_at).diff(messageGroup[index - 1].send_at, 'm') <= 1) {
+              result[result.length - 1].push(message);
+              return result;
+            }
+
+            return [...result, [message]];
+          }
+          , [[]])
+        )
+        .value()
+        ,
     [chat.messages]
   );
 
@@ -39,6 +59,7 @@ const MessagesList: FC<MessagesListProps> = props => {
         "p-8"
       )}
     >
+      {/* <pre>{JSON.stringify(groupedMessages)}</pre> */}
       {Object.keys(groupedMessages)
         .sort((a, b) => Number(b) - Number(a))
         .map(date => (
@@ -46,12 +67,11 @@ const MessagesList: FC<MessagesListProps> = props => {
             <MessageIndicator>{chatTimestamp(Number(date))}</MessageIndicator>
 
             {groupedMessages[date]
-              .sort((a, b) => a.send_at - b.send_at)
-              .map(message =>
-                message.contact_id === user.id ? (
-                  <UserMessage message={message} key={message.id} />
+              .map(messages =>
+                messages[0].contact_id === user.id ? (
+                  <UserMessage messages={messages} key={messages[0].id} />
                 ) : (
-                  <ContactMessage message={message} key={message.id} />
+                  <ContactMessage messages={messages} key={messages[0].id} />
                 )
               )}
           </div>

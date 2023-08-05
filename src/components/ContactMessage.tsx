@@ -11,12 +11,12 @@ import UserAvatar from "./UserAvatar";
 import ContactMessageBubble from "./ContactMessageBubble";
 
 interface ContactMessageProps {
-  message: Message;
+  messages: Message[];
 }
 
 const ContactMessage: FC<ContactMessageProps> = props => {
-  const { message } = props;
-  const user = useAppSelector(selectContact(message.contact_id));
+  const { messages } = props;
+  const user = useAppSelector(selectContact(messages[0].contact_id));
 
   if (!user) {
     return <></>;
@@ -33,12 +33,16 @@ const ContactMessage: FC<ContactMessageProps> = props => {
       <div className={clsx("flex flex-col flex-1", "items-start")}>
         <p className={clsx("flex flex-row items-baseline gap-2 mb-2")}>
           <MessageName name={displayName(user)} />
-          <MessageDate date={new Date(message.send_at)} />
+          <MessageDate date={new Date(messages[0].send_at)} />
         </p>
 
-        <ContactMessageBubble>
-          <MessageSelector message={message} />
-        </ContactMessageBubble>
+        <div className="flex flex-col gap-1 items-start">
+          {messages.map(message => (
+            <ContactMessageBubble key={message.id}>
+              <MessageSelector message={message} />
+            </ContactMessageBubble>
+          ))}
+        </div>
       </div>
       <div className="w-14"></div>
     </div>

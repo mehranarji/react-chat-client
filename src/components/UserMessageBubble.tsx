@@ -11,10 +11,9 @@ const UserMessageBubble: FC<UserMessageBubbleProps> = (props) => {
     <div
       className={clsx(
         "max-w-sm",
-        "rounded-3xl",
         "overflow-hidden",
         "bg-green-700 text-white",
-        "rounded-tr-none"
+        "rounded-l-3xl last-of-type:rounded-br-3xl",
       )}
     >
       {children}

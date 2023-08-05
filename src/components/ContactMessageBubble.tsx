@@ -11,10 +11,9 @@ const ContactMessageBubble: FC<ContactMessageBubbleProps> = (props) => {
     <div
       className={clsx(
         "max-w-sm",
-        "rounded-3xl",
         "overflow-hidden",
         "bg-neutral-200 text-black",
-        "rounded-tl-none"
+        "rounded-r-3xl last-of-type:rounded-bl-3xl",
       )}
     >
       {children}

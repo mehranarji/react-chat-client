@@ -11,11 +11,11 @@ import UserAvatar from "./UserAvatar";
 import UserMessageBubble from "./UserMessageBubble";
 
 interface UserMessageProps {
-  message: Message;
+  messages: Message[];
 }
 
 const UserMessage: FC<UserMessageProps> = props => {
-  const { message } = props;
+  const { messages } = props;
   const user = useAppSelector(selectUser);
 
   return (
@@ -29,12 +29,16 @@ const UserMessage: FC<UserMessageProps> = props => {
       <div className={clsx("flex flex-col flex-1", "items-end")}>
         <p className={clsx("flex flex-row-reverse items-baseline gap-2 mb-2")}>
           <MessageName name="you" />
-          <MessageDate date={new Date(message.send_at)} />
+          <MessageDate date={new Date(messages[0].send_at)} />
         </p>
 
-        <UserMessageBubble>
-          <MessageSelector message={message} />
-        </UserMessageBubble>
+        <div className="flex flex-col gap-1 items-end">
+          {messages.map(message => (
+            <UserMessageBubble key={message.id}>
+              <MessageSelector message={message} />
+            </UserMessageBubble>
+          ))}
+        </div>
       </div>
       <div className="w-14"></div>
     </div>
